@@ -1,0 +1,2 @@
+
+SEPARATOR = '\x01'
