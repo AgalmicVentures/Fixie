@@ -1,6 +1,7 @@
 
 import constants
 
+#TODO: parse a single character at a time instead of using lots of a nasty splits
 def parseMessage(message, separator=constants.SEPARATOR):
 	'''
 	Parses a single FIX message into a dictionary of ID's to lists of values.
