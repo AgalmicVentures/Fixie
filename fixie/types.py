@@ -1,5 +1,5 @@
 
-import encoder
+from . import encoder
 
 class FIXMessage:
 	'''
