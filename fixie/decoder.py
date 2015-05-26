@@ -13,8 +13,13 @@ def parseMessage(message, separator=constants.SEPARATOR):
 	parsedMessage = {}
 	for k, v in (d.split('=', 2) for d in message.split(separator)[:-1]):
 		k = int(k)
-		if k not in parsedMessage:
-			parsedMessage[k] = []
 
-		parsedMessage[k].append(v)
+		currentValue = parsedMessage.get(k)
+		if currentValue is None:
+			parsedMessage[k] = v
+		elif type(currentValue) is list:
+			currentValue.append(v)
+		else:
+			parsedMessage[k] = [parsedMessage[k], v]
+
 	return parsedMessage

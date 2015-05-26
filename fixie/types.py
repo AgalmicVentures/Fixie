@@ -34,15 +34,30 @@ class FIXMessage:
 		Returns the body length of the message as indicated by tag 9.
 		:return int
 		'''
-		rawValue = self._parsedMessage.get(9, [])
-		return None if len(rawValue) != 1 else int(rawValue[0])
+		rawValue = self._parsedMessage.get(9)
+		return None if rawValue is None else int(rawValue)
 
 	def checkSum(self):
 		'''
 		Returns the checksum of the message as indicated by tag 10.
 		:return int
 		'''
-		rawValue = self._parsedMessage.get(10, [])
-		return None if len(rawValue) != 1 else int(rawValue[0])
+		rawValue = self._parsedMessage.get(10)
+		return None if rawValue is None else int(rawValue)
+
+	def sequenceNumber(self):
+		'''
+		Returns the sequence number of the message as indicated by tag 34.
+		:return int
+		'''
+		rawValue = self._parsedMessage.get(34)
+		return None if rawValue is None else int(rawValue)
+
+	def messageType(self):
+		'''
+		Returns the type of the message as indicated by tag 35.
+		:return string
+		'''
+		return self._parsedMessage.get(35)
 
 	#TODO: others

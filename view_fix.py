@@ -15,8 +15,11 @@ def printMessage(n, message):
 	parsedMessage = fixie.parseMessage(message)
 	for k in sorted(parsedMessage.keys()):
 		name = fixie.TAG_ID_TO_NAME.get(k, '')
-		values = ', '.join(parsedMessage[k])
-		print('\t%20s [%4d] = %s' % (name, k, values))
+
+		value = parsedMessage[k]
+		valueString = ', '.join(value) if type(value) is list else str(value)
+
+		print('\t%20s [%4d] = %s' % (name, k, valueString))
 
 	print()
 
