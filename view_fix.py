@@ -7,7 +7,7 @@ import fixie
 
 def main():
 	if len(sys.argv) <= 1:
-		print('Ussage: format_fix.py <FILENAME>')
+		print('Ussage: view_fix.py <FILENAME>')
 		return 1
 
 	with io.open(sys.argv[1]) as fixFile:
