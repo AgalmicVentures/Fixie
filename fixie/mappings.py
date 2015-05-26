@@ -412,6 +412,10 @@ TAG_ID_TO_NAME = {
 TAG_NAME_TO_ID = {}
 for k, v in TAG_ID_TO_NAME.items():
 	#Validate data as it goes
+	assert(type(k) is int)
+	assert(0 < k)
+	assert(k < 10000)
+	assert(type(v) is str)
 	assert(v not in TAG_NAME_TO_ID)
 	assert(re.match('[A-Z0-9][A-Za-z0-9]*', v) is not None)
 

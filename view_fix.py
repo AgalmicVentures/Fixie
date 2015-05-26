@@ -6,11 +6,11 @@ import sys
 import fixie
 
 def printMessage(n, message):
-	"""
+	'''
 	Pretty prints a single (unparsed) FIX message.
 	:param n: int
 	:param message: string
-	"""
+	'''
 	assert(type(n) is int)
 
 	if message == '':
@@ -31,10 +31,14 @@ def printMessage(n, message):
 	print()
 
 def printFile(file):
+	'''
+	Pretty prints the contents of a file, line by line.
+	'''
 	for n, message in enumerate(file):
 		printMessage(n, message)
 
 def main():
+	#Read from the file name passed as an argument, or stdin if none is passed
 	if len(sys.argv) <= 1:
 		printFile(sys.stdin)
 	else:
