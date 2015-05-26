@@ -7,6 +7,7 @@ def parseMessage(message, separator=constants.SEPARATOR):
 	:param message: string
 	:return: dict of int -> list[string] (ID -> values)
 	'''
+	assert(len(separator) > 0)
 
 	parsedMessage = {}
 	for k, v in (d.split('=', 2) for d in message.split(separator)[:-1]):
