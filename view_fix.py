@@ -6,6 +6,13 @@ import sys
 import fixie
 
 def printMessage(n, message):
+	"""
+	Pretty prints a single (unparsed) FIX message.
+	:param n: int
+	:param message: string
+	"""
+	assert(type(n) is int)
+
 	if message == '':
 		return
 
