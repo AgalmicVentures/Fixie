@@ -8,6 +8,8 @@ def parseMessage(message, separator=constants.SEPARATOR):
 	:param message: string
 	:return: dict of int -> list[string] (ID -> values)
 	'''
+	assert(type(message) is str)
+	assert(type(separator) is str)
 	assert(len(separator) > 0)
 
 	parsedMessage = {}

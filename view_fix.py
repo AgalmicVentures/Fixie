@@ -26,7 +26,7 @@ def printMessage(n, message):
 		value = parsedMessage[k]
 		valueString = ', '.join(value) if type(value) is list else str(value)
 
-		print('\t%20s [%4d] = %s' % (name, k, valueString))
+		print('%28s [%4d] = %s' % (name, k, valueString))
 
 	print()
 

@@ -10,7 +10,7 @@ class FIXMessage:
 		'''
 		Initializes a new instance of FIXMessage with an already parsed message.
 		'''
-		assert(len(message) > 0)
+		assert(type(message) is str)
 
 		self._message = message
 		self._parsedMessage = decoder.parseMessage(message)
