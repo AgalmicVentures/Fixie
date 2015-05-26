@@ -1,4 +1,6 @@
 
+import re
+
 TAG_ID_TO_NAME = {
 	1: 'Account',
 	2: 'AdvId',
@@ -23,7 +25,7 @@ TAG_ID_TO_NAME = {
 	21: 'HandlInst',
 	22: 'IDSource',
 	23: 'IOIid',
-	24: 'IOIOthSvc (no longer used)',
+	24: 'IOIOthSvc',
 	25: 'IOIQltyInd',
 	26: 'IOIRefID',
 	27: 'IOIShares',
@@ -46,11 +48,11 @@ TAG_ID_TO_NAME = {
 	44: 'Price',
 	45: 'RefSeqNum',
 	46: 'RelatdSym',
-	47: 'Rule80A(aka OrderCapacity)',
+	47: 'Rule80A',
 	48: 'SecurityID',
 	49: 'SenderCompID',
 	50: 'SenderSubID',
-	51: 'SendingDate (no longer used)',
+	51: 'SendingDate',
 	52: 'SendingTime',
 	53: 'Shares',
 	54: 'Side',
@@ -67,7 +69,7 @@ TAG_ID_TO_NAME = {
 	65: 'SymbolSfx',
 	66: 'ListID',
 	67: 'ListSeqNo',
-	68: 'TotNoOrders(formerly named: ListNoOrds)',
+	68: 'TotNoOrders',
 	69: 'ListExecInst',
 	70: 'AllocID',
 	71: 'AllocTransType',
@@ -84,8 +86,8 @@ TAG_ID_TO_NAME = {
 	82: 'NoRpts',
 	83: 'RptSeq',
 	84: 'CxlQty',
-	85: 'NoDlvyInst(no longer used)',
-	86: 'DlvyInst(no longer used)',
+	85: 'NoDlvyInst',
+	86: 'DlvyInst',
 	87: 'AllocStatus',
 	88: 'AllocRejCode',
 	89: 'Signature',
@@ -123,7 +125,7 @@ TAG_ID_TO_NAME = {
 	122: 'OrigSendingTime',
 	123: 'GapFillFlag',
 	124: 'NoExecs',
-	125: 'CxlType(no longer used)',
+	125: 'CxlType',
 	126: 'ExpireTime',
 	127: 'DKReason',
 	128: 'DeliverToCompID',
@@ -409,6 +411,9 @@ TAG_ID_TO_NAME = {
 
 TAG_NAME_TO_ID = {}
 for k, v in TAG_ID_TO_NAME.iteritems():
+	#Validate data as it goes
 	assert(v not in TAG_NAME_TO_ID)
+	assert(re.match('[A-Z0-9][A-Za-z0-9]*', v) is not None)
+
 	TAG_NAME_TO_ID[v] = k
 
