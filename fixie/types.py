@@ -1,5 +1,80 @@
 
+import re
+
 from . import decoder, encoder
+
+class FIXTag:
+	'''
+	Represents a FIX tag (used to automate parsing).
+	'''
+
+	def __init__(self, id, name, repeatingHeaderNumber=None, vendor=None, description=None):
+		'''
+		Initializes a new instance of FIXTag.
+		'''
+		assert(type(id) is int)
+		assert(0 < id)
+		assert(id < 10000)
+		assert(type(name) is str)
+		assert(re.match('[A-Z0-9][a-zA-Z0-9]*', name) is not None)
+		assert(repeatingHeaderNumber is None or type(repeatingHeaderNumber) is int)
+		assert(vendor is None or type(vendor) is str)
+		assert(description is None or type(description) is str)
+
+		self._id = id
+		self._name = name
+		self._repeatingHeaderNumber = repeatingHeaderNumber
+		self._vendor = vendor
+		self._description = description
+
+	def __str__(self):
+		'''
+		Returns a string representing this tag.
+		:return string
+		'''
+		return '[%4d] %s' % (self._id, self._name)
+
+	def __repr__(self):
+		'''
+		Returns a more complete string representing this tag.
+		:return string
+		'''
+		return '[%4d] %s rhn=%s v=%s d=%s' % (self._id, self._name, self._repeatingHeaderNumber, self._vendor, self._description)
+
+	def id(self):
+		'''
+		Returns the ID of the tag.
+		:return int
+		'''
+		return self._id
+
+	def name(self):
+		'''
+		Returns the name of the tag.
+		:return string
+		'''
+		return self._name
+
+	def repeatingHeaderNumber(self):
+		'''
+		Returns the number of the repeating group header if this is a part of one.
+		:return string
+		'''
+		return self._repeatingHeaderNumber
+
+	def vendor(self):
+		'''
+		Returns the vendor of the tag.
+		:return string
+		'''
+		return self._vendor
+
+	def description(self):
+		'''
+		Returns a description of the tag.
+		:return string
+		'''
+		return self._description
 
 class FIXMessage:
 	'''
@@ -8,7 +83,7 @@ class FIXMessage:
 
 	def __init__(self, message):
 		'''
-		Initializes a new instance of FIXMessage with an already parsed message.
+		Initializes a new instance of FIXMessage with an unparsed message.
 		'''
 		assert(type(message) is str)
 

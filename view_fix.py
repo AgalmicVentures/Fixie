@@ -21,7 +21,8 @@ def printMessage(n, message):
 	#TODO: error handling
 	parsedMessage = fixie.parseMessage(message)
 	for k in sorted(parsedMessage.keys()):
-		name = fixie.TAG_ID_TO_NAME.get(k, '')
+		tag = fixie.TAG_ID_TO_NAME.get(k)
+		name = tag.name() if tag is not None else ''
 
 		value = parsedMessage[k]
 		valueString = ', '.join(value) if type(value) is list else str(value)
