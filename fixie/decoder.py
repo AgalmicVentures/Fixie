@@ -11,6 +11,8 @@ def parseMessage(message, separator=constants.SEPARATOR, valueSeparator=constant
 	assert(type(message) is str)
 	assert(type(separator) is str)
 	assert(len(separator) > 0)
+	assert(type(valueSeparator) is str)
+	assert(len(valueSeparator) > 0)
 
 	parsedMessage = {}
 	for k, v in (d.split(valueSeparator, 2) for d in message.split(separator)[:-1]):
