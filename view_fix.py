@@ -5,6 +5,11 @@ import sys
 
 import fixie
 
+def getPrettyTagValue(tag, value):
+	enumValues = fixie.TAG_ENUM_VALUES.get(tag)
+	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
+	return '%s%s' % (value, enumValue)
+
 def printMessage(n, message):
 	'''
 	Pretty prints a single (unparsed) FIX message.
@@ -25,7 +30,7 @@ def printMessage(n, message):
 		name = tag.name() if tag is not None else ''
 
 		value = parsedMessage[k]
-		valueString = ', '.join(value) if type(value) is list else str(value)
+		valueString = ', '.join(getPrettyTagValue(k, item) for item in value) if type(value) is list else getPrettyTagValue(k, value)
 
 		print('%28s [%4d] = %s' % (name, k, valueString))
 

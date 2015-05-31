@@ -15,12 +15,17 @@ def parseMessage(message, separator=constants.SEPARATOR, valueSeparator=constant
 	parsedMessage = {}
 	for k, v in (d.split(valueSeparator, 2) for d in message.split(separator)[:-1]):
 		k = int(k)
-
 		currentValue = parsedMessage.get(k)
+
+		#Insert if there is nothing
 		if currentValue is None:
 			parsedMessage[k] = v
+
+		#Or add on if it's a list
 		elif type(currentValue) is list:
 			currentValue.append(v)
+
+		#But if it's just a scalar, make a list
 		else:
 			parsedMessage[k] = [parsedMessage[k], v]
 

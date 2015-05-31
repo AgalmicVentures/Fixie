@@ -2,6 +2,7 @@
 from .types import FIXTag
 
 TAGS = [
+##### BEGIN GENERATED CODE
 	FIXTag(   1, 'Account', repeatingHeaderNumber=None, vendor='None', description='None'),
 	FIXTag(   2, 'AdvId', repeatingHeaderNumber=None, vendor='None', description='None'),
 	FIXTag(   3, 'AdvRefID', repeatingHeaderNumber=None, vendor='None', description='None'),
@@ -476,6 +477,7 @@ TAGS = [
 	FIXTag(9787, 'DisplayFactor', repeatingHeaderNumber=None, vendor='CME', description='Contains the multiplier to convert the CME Globex display price to the conventional price.'),
 	FIXTag(9850, 'MinCabPrice', repeatingHeaderNumber=None, vendor='CME', description='Defines cabinet price for outright options products.'),
 	FIXTag(9853, 'PricingModel', repeatingHeaderNumber=None, vendor='CME', description='Identifies options pricing model (F=Fischer-Black, W=Whaley).'),
+##### END GENERATED CODE
 ]
 
 TAG_ID_TO_NAME = {}
@@ -487,3 +489,56 @@ for tag in TAGS:
 	assert(tag.name() not in TAG_NAME_TO_ID)
 	TAG_NAME_TO_ID[tag.name()] = tag
 
+#Separate from the tags for ease of code generation
+TAG_ENUM_VALUES = {
+	731: {
+		'1': 'Final',
+		'2': 'Theoretical',
+		'100': 'Actual preliminary (instrument not subject to settlement price rounding)',
+		'101': 'Actual preliminary (instrument subject to settlement price rounding)'
+	},
+	827: {
+		'0': 'Expire on trading session close',
+		'2': 'Expiration at given date'
+	},
+	865: {
+		'5': 'Activation',
+		'7': 'Last eligible trade date'
+	},
+	980: {
+		'D': 'Delete',
+		'M': 'Modify'
+	},
+	1093: {
+		'2': 'Minimum order entry quantity',
+		'3': 'Minimum quantity required for block trade',
+		'4': 'Round lot (variable quantity products)'
+	},
+	1142: {
+		'F': 'FIFO',
+		'K': 'Configurable',
+		'C': 'Pro-Rata',
+		'A': 'Allocation',
+		'T': 'FIFO with LLM',
+		'O': 'Threshold Pro-Rata',
+		'S': 'FIFO with TOP and LLM',
+		'Q': 'Threshold Pro-Rata with LLM',
+		'Y': 'Eurodollar options'
+	},
+	1144: {
+		'0': 'Non-implied instrument',
+		'3': 'Implied instrument'
+	},
+	1435: {
+		'1': 'Multiplied by hour',
+		'2': 'Multiplied by day'
+	},
+	9779: {
+		'Y': 'User defined',
+		'N': 'Not user defined'
+	},
+	9853: {
+		'F': 'Fisher-Black',
+		'W': 'Whaley'
+	}
+}
