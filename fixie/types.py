@@ -8,7 +8,7 @@ class FIXTag:
 	Represents a FIX tag (used to automate parsing).
 	'''
 
-	def __init__(self, id, name, repeatingHeaderNumber=None, vendor=None, description=None):
+	def __init__(self, id, name, repeatingHeaderId=None, vendor=None, description=None):
 		'''
 		Initializes a new instance of FIXTag.
 		'''
@@ -17,13 +17,13 @@ class FIXTag:
 		assert(id < 10000)
 		assert(type(name) is str)
 		assert(re.match('[A-Z0-9][a-zA-Z0-9]*', name) is not None)
-		assert(repeatingHeaderNumber is None or type(repeatingHeaderNumber) is int)
+		assert(repeatingHeaderId is None or type(repeatingHeaderId) is int)
 		assert(vendor is None or type(vendor) is str)
 		assert(description is None or type(description) is str)
 
 		self._id = id
 		self._name = name
-		self._repeatingHeaderNumber = repeatingHeaderNumber
+		self._repeatingHeaderId = repeatingHeaderId
 		self._vendor = vendor
 		self._description = description
 
@@ -39,7 +39,7 @@ class FIXTag:
 		Returns a more complete string representing this tag.
 		:return string
 		'''
-		return '[%4d] %s rhn=%s v=%s d=%s' % (self._id, self._name, self._repeatingHeaderNumber, self._vendor, self._description)
+		return '[%4d] %s rhn=%s v=%s d=%s' % (self._id, self._name, self._repeatingHeaderId, self._vendor, self._description)
 
 	def id(self):
 		'''
@@ -55,12 +55,12 @@ class FIXTag:
 		'''
 		return self._name
 
-	def repeatingHeaderNumber(self):
+	def repeatingHeaderId(self):
 		'''
-		Returns the number of the repeating group header if this is a part of one.
+		Returns the ID of the repeating group header if this is a part of one.
 		:return string
 		'''
-		return self._repeatingHeaderNumber
+		return self._repeatingHeaderId
 
 	def vendor(self):
 		'''
