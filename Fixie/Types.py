@@ -1,7 +1,7 @@
 
 import re
 
-from . import decoder, encoder
+from . import Decoder, Encoder
 
 class FIXTag:
 	'''

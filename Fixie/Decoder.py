@@ -1,5 +1,5 @@
 
-from . import constants
+from . import Constants
 
 #TODO: parse a single character at a time instead of using lots of a nasty splits
 def parseMessage(message, separator=constants.SEPARATOR, valueSeparator=constants.VALUE_SEPARATOR):

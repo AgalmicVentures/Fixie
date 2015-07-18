@@ -3,10 +3,10 @@
 import io
 import sys
 
-import fixie
+import Fixie
 
 def getPrettyTagValue(tag, value):
-	enumValues = fixie.TAG_ENUM_VALUES.get(tag)
+	enumValues = Fixie.TAG_ENUM_VALUES.get(tag)
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
 
@@ -21,12 +21,12 @@ def printMessage(n, message):
 	if message == '':
 		return
 
-	print('%6d: %s%s' % (n, message[:100].replace(fixie.SEPARATOR, '|'), '...' if len(message) > 100 else ''))
+	print('%6d: %s%s' % (n, message[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(message) > 100 else ''))
 
 	#TODO: error handling
-	parsedMessage = fixie.parseMessage(message)
+	parsedMessage = Fixie.parseMessage(message)
 	for k in sorted(parsedMessage.keys()):
-		tag = fixie.TAG_ID_TO_NAME.get(k)
+		tag = Fixie.TAG_ID_TO_NAME.get(k)
 		name = tag.name() if tag is not None else ''
 
 		value = parsedMessage[k]

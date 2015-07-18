@@ -1,5 +1,5 @@
 
-from . import constants
+from . import Constants
 
 def formatMessage(parsedMessage, separator=constants.SEPARATOR):
 	'''

@@ -1,5 +1,5 @@
 
-from .types import FIXTag
+from .Types import FIXTag
 
 TAGS = [
 ##### BEGIN GENERATED CODE
