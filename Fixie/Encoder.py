@@ -1,7 +1,7 @@
 
 from . import Constants
 
-def formatMessage(parsedMessage, separator=constants.SEPARATOR):
+def formatMessage(parsedMessage, separator=Constants.SEPARATOR):
 	'''
 	Formats a parsed FIX message into a string.
 	:return string

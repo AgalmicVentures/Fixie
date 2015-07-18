@@ -2,7 +2,7 @@
 from . import Constants
 
 #TODO: parse a single character at a time instead of using lots of a nasty splits
-def parseMessage(message, separator=constants.SEPARATOR, valueSeparator=constants.VALUE_SEPARATOR):
+def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constants.VALUE_SEPARATOR):
 	'''
 	Parses a single FIX message into a dictionary of ID's to lists of values.
 	:param message: string
