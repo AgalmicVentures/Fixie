@@ -10,18 +10,19 @@ def getPrettyTagValue(tag, value):
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
 
-def printMessage(n, message):
-	'''
+def printMessage(indent, message):
+	"""
 	Pretty prints a single (unparsed) FIX message.
-	:param n: int
+
+	:param indent: int
 	:param message: string
-	'''
-	assert(type(n) is int)
+	"""
+	assert(type(indent) is int)
 
 	if message == '':
 		return
 
-	print('%6d: %s%s' % (n, message[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(message) > 100 else ''))
+	print('%6d: %s%s' % (indent, message[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(message) > 100 else ''))
 
 	#TODO: error handling
 	parsedMessage = Fixie.parseMessage(message)
