@@ -95,7 +95,7 @@ class FIXMessage:
 		assert(type(message) is str)
 
 		self._message = message
-		self._parsedMessage = decoder.parseMessage(message)
+		self._parsedMessage = Decoder.parseMessage(message)
 
 	########## Basic Accessors ##########
 

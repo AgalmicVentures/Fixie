@@ -10,7 +10,7 @@ def getPrettyTagValue(tag, value):
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
 
-def printMessage(indent, message):
+def printMessage(indent, messageStr):
 	"""
 	Pretty prints a single (unparsed) FIX message.
 
@@ -19,13 +19,14 @@ def printMessage(indent, message):
 	"""
 	assert(type(indent) is int)
 
-	if message == '':
+	if messageStr == '':
 		return
 
-	print('%6d: %s%s' % (indent, message[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(message) > 100 else ''))
+	print('%6d: %s%s' % (indent, messageStr[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(messageStr) > 100 else ''))
 
 	#TODO: error handling
-	parsedMessage = Fixie.parseMessage(message)
+	message = Fixie.FIXMessage(messageStr)
+	parsedMessage = message.parsedMessage()
 	for k in sorted(parsedMessage.keys()):
 		tag = Fixie.TAG_ID_TO_NAME.get(k)
 		name = tag.name() if tag is not None else ''
@@ -38,9 +39,9 @@ def printMessage(indent, message):
 	print()
 
 def printFile(file):
-	'''
+	"""
 	Pretty prints the contents of a file, line by line.
-	'''
+	"""
 	for n, message in enumerate(file):
 		printMessage(n, message)
 
