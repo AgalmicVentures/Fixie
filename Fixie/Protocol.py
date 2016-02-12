@@ -1,7 +1,7 @@
 
 import re
 
-from . import Decoder, Encoder
+from . import Constants, Decoder, Encoder
 
 class FIXTag:
 	"""
@@ -130,6 +130,25 @@ class FIXMessage:
 		:return: int
 		"""
 		return len(self._message)
+
+	########## Methods ##########
+
+	def calculateChecksum(self):
+		"""
+		Calculates the checksum of this message, excluding the last tag if it is a checksum.
+
+		:return: int
+		"""
+		#Remove the checksum tag from consideration
+		lastTag = self._message.rfind(Constants.SEPARATOR, 0, -2)
+		if self._message[lastTag+1:lastTag+4] == '10=':
+			end = lastTag + 1
+		else:
+			end = len(self._message)
+
+		#Calculate the checksum over the part before the checksum
+		checksum = sum(ord(ch) for ch in self._message[0:end])
+		return checksum % 256
 
 	########## Tag Helpers ##########
 

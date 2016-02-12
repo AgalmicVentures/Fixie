@@ -34,7 +34,11 @@ def printMessage(indent, messageStr):
 		value = parsedMessage[k]
 		valueString = ', '.join(getPrettyTagValue(k, item) for item in value) if type(value) is list else getPrettyTagValue(k, value)
 
-		print('%28s [%4d] = %s' % (name, k, valueString))
+		extra = ''
+		if tag is not None and tag.id() == 10:
+			extra = ' (calculated checksum = %d)' % message.calculateChecksum()
+
+		print('%28s [%4d] = %s%s' % (name, k, valueString, extra))
 
 	print()
 
