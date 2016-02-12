@@ -1,7 +1,7 @@
 
 import re
 
-from . import Constants, Decoder, Encoder
+from . import Constants, Parser
 
 class FIXTag:
 	"""
@@ -95,7 +95,7 @@ class FIXMessage:
 		assert(type(message) is str)
 
 		self._message = message
-		self._parsedMessage = Decoder.parseMessage(message)
+		self._parsedMessage = Parser.parseMessage(message)
 
 	########## Basic Accessors ##########
 
@@ -150,6 +150,13 @@ class FIXMessage:
 		checksum = sum(ord(ch) for ch in self._message[0:end])
 		return checksum % 256
 
+	def updateMessage(self):
+		"""
+		Updates the message to reflect the dictionary (including the checksum, which is also
+		updated in the dictionary).
+		"""
+		#TODO
+
 	########## Tag Helpers ##########
 
 	def _parsePrice(self, price):
@@ -174,7 +181,7 @@ class FIXMessage:
 		rawValue = self._parsedMessage.get(9)
 		return None if rawValue is None else int(rawValue)
 
-	def checkSum(self):
+	def checksum(self):
 		"""
 		Returns the checksum of the message as indicated by tag 10.
 
