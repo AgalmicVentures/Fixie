@@ -19,7 +19,7 @@ def main():
 				continue
 
 			#Break up the row
-			id, name, repeatingHeaderId, vendor, description, _ = row
+			id, name, fixType, repeatingHeaderId, vendor, description, _ = row
 
 			#Write the tag constructor
 			print("\tFIXTag(%4s, '%s', repeatingHeaderId=%s, vendor=%s%s)," % (

@@ -309,7 +309,7 @@ TYPE_CLASSES = {
 	'Percentage': FIXFloat,
 	'Price': FIXFloat,
 	'PriceOffset': FIXFloat,
-	'Quantity': FIXFloat,
+	'Qty': FIXFloat,
 
 	'int': FIXInt,
 	'DayOfMonth': FIXInt,
