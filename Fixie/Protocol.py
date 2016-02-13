@@ -1,14 +1,14 @@
 
 import re
 
-from . import Constants, Parser
+from . import Constants, Parser, Types
 
 class FIXTag:
 	"""
 	Represents a FIX tag (used to automate parsing).
 	"""
 
-	def __init__(self, id, name, repeatingHeaderId=None, vendor=None, description=None):
+	def __init__(self, id, name, typeName=None, repeatingHeaderId=None, vendor=None, description=None):
 		"""
 		Initializes a new instance of FIXTag.
 		"""
@@ -17,12 +17,15 @@ class FIXTag:
 		assert(id < 10000)
 		assert(type(name) is str)
 		assert(re.match('[A-Z0-9][a-zA-Z0-9]*', name) is not None)
+		assert(typeName is None or type(typeName) is str)
 		assert(repeatingHeaderId is None or type(repeatingHeaderId) is int)
 		assert(vendor is None or type(vendor) is str)
 		assert(description is None or type(description) is str)
 
 		self._id = id
 		self._name = name
+		self._typeName = typeName
+		self._type = None if typeName is None else Types.TYPE_NAME_TO_TYPE.get(typeName)
 		self._repeatingHeaderId = repeatingHeaderId
 		self._vendor = vendor
 		self._description = description
@@ -58,6 +61,22 @@ class FIXTag:
 		:return: str
 		"""
 		return self._name
+
+	def typeName(self):
+		"""
+		Returns the name of the type of the tag.
+
+		:return: str
+		"""
+		return self._typeName
+
+	def type(self):
+		"""
+		Returns the `FIXType` of the tag (e.g. for parsing).
+
+		:return: FIXType
+		"""
+		return self._typeName
 
 	def repeatingHeaderId(self):
 		"""
