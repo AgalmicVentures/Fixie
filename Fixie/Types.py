@@ -503,9 +503,9 @@ TYPE_CLASSES = [
 	FIXUTCTimestamp,
 ]
 
-TYPE_NAME_TO_TYPES = {}
+TYPE_NAME_TO_TYPE = {}
 for typeClass in TYPE_CLASSES:
 	fixType = typeClass()
 
-	assert(fixType.name() not in TYPE_NAME_TO_TYPES)
-	TYPE_NAME_TO_TYPES[fixType.name()] = fixType
+	assert(fixType.name() not in TYPE_NAME_TO_TYPE)
+	TYPE_NAME_TO_TYPE[fixType.name()] = fixType

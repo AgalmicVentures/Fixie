@@ -19,11 +19,12 @@ def main():
 				continue
 
 			#Break up the row
-			id, name, fixType, repeatingHeaderId, vendor, description, _ = row
+			id, name, typeName, repeatingHeaderId, vendor, description, _ = row
 
 			#Write the tag constructor
-			print("\tFIXTag(%4s, '%s', repeatingHeaderId=%s, vendor=%s%s)," % (
+			print("\tFIXTag(%4s, '%s', typeName=%s, repeatingHeaderId=%s, vendor=%s%s)," % (
 				id, name,
+				"'%s'" % typeName if typeName != '' else 'None',
 				str(repeatingHeaderId) if repeatingHeaderId != '' else 'None',
 				"'%s'" % vendor if vendor != '' else 'None',
 				", description=%s" % description.__repr__() if description != '' else '', #__repr__ is necessary to escape single quotes
