@@ -61,7 +61,7 @@ class FIXMessage:
 		if value is None:
 			return None
 
-		tag = Mappings.TAG_ID_TO_TAG.get(id)
+		tag = Tags.TAG_ID_TO_TAG.get(id)
 		if tag is None:
 			return value
 		else:
@@ -149,8 +149,7 @@ class FIXMessage:
 
 		:return: int
 		"""
-		rawValue = self._parsedMessage.get(6)
-		return None if rawValue is None else self._parsePrice(rawValue)
+		return self.getParsed(6)
 
 	def bodyLength(self):
 		"""
@@ -158,8 +157,7 @@ class FIXMessage:
 
 		:return: int
 		"""
-		rawValue = self._parsedMessage.get(9)
-		return None if rawValue is None else int(rawValue)
+		return self.getParsed(9)
 
 	def checksum(self):
 		"""
@@ -167,8 +165,7 @@ class FIXMessage:
 
 		:return: int
 		"""
-		rawValue = self._parsedMessage.get(10)
-		return None if rawValue is None else int(rawValue)
+		return self.getParsed(10)
 
 	def currency(self):
 		"""
@@ -176,7 +173,7 @@ class FIXMessage:
 
 		:return: str
 		"""
-		return self._parsedMessage.get(15)
+		return self.get(15)
 
 	def lastPrice(self):
 		"""
@@ -184,8 +181,7 @@ class FIXMessage:
 
 		:return: int
 		"""
-		rawValue = self._parsedMessage.get(31)
-		return None if rawValue is None else self._parsePrice(rawValue)
+		return self.getParsed(31)
 
 	def sequenceNumber(self):
 		"""
@@ -193,8 +189,7 @@ class FIXMessage:
 
 		:return: int
 		"""
-		rawValue = self._parsedMessage.get(34)
-		return None if rawValue is None else int(rawValue)
+		return self.getParsed(34)
 
 	def messageType(self):
 		"""
@@ -202,7 +197,7 @@ class FIXMessage:
 
 		:return: str
 		"""
-		return self._parsedMessage.get(35)
+		return self.get(35)
 
 	def price(self):
 		"""
@@ -210,8 +205,7 @@ class FIXMessage:
 
 		:return: float
 		"""
-		rawValue = self._parsedMessage.get(44)
-		return None if rawValue is None else self._parsePrice(rawValue)
+		return self.getParsed(44)
 
 	def senderCompID(self):
 		"""
@@ -219,7 +213,7 @@ class FIXMessage:
 
 		:return: str
 		"""
-		return self._parsedMessage.get(49)
+		return self.get(49)
 
 	def symbol(self):
 		"""
@@ -227,7 +221,7 @@ class FIXMessage:
 
 		:return: str
 		"""
-		return self._parsedMessage.get(55)
+		return self.get(55)
 
 	def strikePrice(self):
 		"""
@@ -235,8 +229,7 @@ class FIXMessage:
 
 		:return: float
 		"""
-		rawValue = self._parsedMessage.get(202)
-		return None if rawValue is None else self._parsePrice(rawValue)
+		return self.getParsed(202)
 
 	def securityExchange(self):
 		"""
@@ -244,6 +237,6 @@ class FIXMessage:
 
 		:return: str
 		"""
-		return self._parsedMessage.get(207)
+		return self.get(207)
 
 	#TODO: others

@@ -76,7 +76,7 @@ class FIXTag:
 
 		:return: FIXType
 		"""
-		return self._typeName
+		return self._type
 
 	def repeatingHeaderId(self):
 		"""
