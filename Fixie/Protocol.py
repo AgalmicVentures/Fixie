@@ -1,5 +1,15 @@
 
-from . import Constants, Parser, Tags, Types
+from . import Constants, Parser, Tags
+
+def calculateChecksum(message):
+	"""
+	Calculates the checksum of a raw message.
+
+	:param message: str
+	:return: int
+	"""
+	checksum = sum(ord(ch) for ch in message)
+	return checksum % 256
 
 class FIXMessage:
 	"""
@@ -48,6 +58,8 @@ class FIXMessage:
 		:return: str or None
 		"""
 		value = self.get(id)
+		if value is None:
+			return None
 
 		tag = Mappings.TAG_ID_TO_TAG.get(id)
 		if tag is None:
@@ -87,15 +99,43 @@ class FIXMessage:
 			end = len(self._message)
 
 		#Calculate the checksum over the part before the checksum
-		checksum = sum(ord(ch) for ch in self._message[0:end])
-		return checksum % 256
+		return calculateChecksum(self._message[0:end])
 
 	def updateMessage(self):
 		"""
 		Updates the message to reflect the dictionary (including the checksum, which is also
 		updated in the dictionary).
 		"""
-		#TODO
+		#TODO: handle repeating groups
+		#TODO: use the type system so this handles lists properly
+
+		#Parts of the message to be joined
+		parts = []
+
+		#Create the headers
+		headerIDs = [8, 9, 35, 49, 56, 34, 52]
+		for headerID in headerIDs:
+			value = self.get(headerID)
+			if value is not None:
+				parts.append('%s=%s%s' % (headerID, value, Constants.SEPARATOR))
+
+		#Write other fields
+		for tagID in self._parsedMessage:
+			#Skip headers
+			if tagID in headerIDs:
+				continue
+
+			parts.append('%s=%s%s' % (tagID, self._parsedMessage[tagID], Constants.SEPARATOR))
+
+		#Calculate the partial message for the checksum
+		parts.append(Constants.SEPARATOR)
+		partialMessage = ''.join(parts)
+
+		#Add the checksum
+		checksum = calculateChecksum(partialMessage)
+		parts.append(Constants.SEPARATOR)
+
+		return '%s10=%3d%s' % (partialMessage, checksum, Constants.SEPARATOR)
 
 	########## Tag Helpers ##########
 
