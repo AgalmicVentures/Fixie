@@ -482,14 +482,14 @@ TAGS = [
 ##### END GENERATED CODE
 ]
 
-TAG_ID_TO_NAME = {}
-TAG_NAME_TO_ID = {}
+TAG_ID_TO_TAG = {}
+TAG_NAME_TO_TAG = {}
 for tag in TAGS:
-	assert(tag.id() not in TAG_ID_TO_NAME)
-	TAG_ID_TO_NAME[tag.id()] = tag
+	assert(tag.id() not in TAG_ID_TO_TAG)
+	TAG_ID_TO_TAG[tag.id()] = tag
 
-	assert(tag.name() not in TAG_NAME_TO_ID)
-	TAG_NAME_TO_ID[tag.name()] = tag
+	assert(tag.name() not in TAG_NAME_TO_TAG)
+	TAG_NAME_TO_TAG[tag.name()] = tag
 
 #Separate from the tags for ease of code generation
 TAG_ENUM_VALUES = {

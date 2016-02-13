@@ -28,7 +28,7 @@ def printMessage(indent, messageStr):
 	message = Fixie.FIXMessage(messageStr)
 	parsedMessage = message.parsedMessage()
 	for k in sorted(parsedMessage.keys()):
-		tag = Fixie.TAG_ID_TO_NAME.get(k)
+		tag = Fixie.TAG_ID_TO_TAG.get(k)
 		name = tag.name() if tag is not None else ''
 
 		value = parsedMessage[k]
