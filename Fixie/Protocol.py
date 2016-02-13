@@ -1,106 +1,5 @@
 
-import re
-
-from . import Constants, Parser, Types
-
-class FIXTag:
-	"""
-	Represents a FIX tag (used to automate parsing).
-	"""
-
-	def __init__(self, id, name, typeName=None, repeatingHeaderId=None, vendor=None, description=None):
-		"""
-		Initializes a new instance of FIXTag.
-		"""
-		assert(type(id) is int)
-		assert(0 < id)
-		assert(id < 10000)
-		assert(type(name) is str)
-		assert(re.match('[A-Z0-9][a-zA-Z0-9]*', name) is not None)
-		assert(typeName is None or type(typeName) is str)
-		assert(repeatingHeaderId is None or type(repeatingHeaderId) is int)
-		assert(vendor is None or type(vendor) is str)
-		assert(description is None or type(description) is str)
-
-		self._id = id
-		self._name = name
-		self._typeName = typeName
-		self._type = None if typeName is None else Types.TYPE_NAME_TO_TYPE.get(typeName)
-		self._repeatingHeaderId = repeatingHeaderId
-		self._vendor = vendor
-		self._description = description
-
-	def __str__(self):
-		"""
-		Returns a string representing this tag.
-
-		:return: str
-		"""
-		return '[%4d] %s' % (self._id, self._name)
-
-	def __repr__(self):
-		"""
-		Returns a more complete string representing this tag.
-
-		:return: str
-		"""
-		return '[%4d] %s rhn=%s v=%s d=%s' % (self._id, self._name, self._repeatingHeaderId, self._vendor, self._description)
-
-	def id(self):
-		"""
-		Returns the ID of the tag.
-
-		:return: int
-		"""
-		return self._id
-
-	def name(self):
-		"""
-		Returns the name of the tag.
-
-		:return: str
-		"""
-		return self._name
-
-	def typeName(self):
-		"""
-		Returns the name of the type of the tag.
-
-		:return: str
-		"""
-		return self._typeName
-
-	def type(self):
-		"""
-		Returns the `FIXType` of the tag (e.g. for parsing).
-
-		:return: FIXType
-		"""
-		return self._typeName
-
-	def repeatingHeaderId(self):
-		"""
-		Returns the ID of the repeating group header if this is a part of one.
-
-		:return: str
-		"""
-		return self._repeatingHeaderId
-
-	def vendor(self):
-		"""
-		Returns the vendor of the tag.
-
-		:return: str
-		"""
-		return self._vendor
-
-	def description(self):
-		"""
-		Returns a description of the tag.
-
-		:return: str
-		"""
-		return self._description
+from . import Constants, Parser, Tags, Types
 
 class FIXMessage:
 	"""
@@ -133,6 +32,28 @@ class FIXMessage:
 		:return: dict
 		"""
 		return self._parsedMessage
+
+	def get(self, id):
+		"""
+		Returns the string value of the given tag ID.
+
+		:return: str or None
+		"""
+		return self._parsedMessage.get(id)
+
+	def getParsed(self, id):
+		"""
+		Returns the string value of the given tag ID.
+
+		:return: str or None
+		"""
+		value = self.get(id)
+
+		tag = Mappings.TAG_ID_TO_TAG.get(id)
+		if tag is None:
+			return value
+		else:
+			return tag.type().parse(value)
 
 	def __str__(self):
 		"""
