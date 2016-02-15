@@ -642,6 +642,23 @@ TAG_ENUM_VALUES = {
 		'l': 'Bid Response',
 		'm': 'List Strike Price'
 	},
+	39: {
+		'0': 'Order ack',
+		'1': 'Partial fill',
+		'2': 'Complete fill',
+		'4': 'Cancel ack',
+		'5': 'Modify ack',
+		'8': 'Reject',
+		'C': 'Expired',
+		'H': 'Trade canceled',
+	},
+	40: {
+		'1': 'Market order',
+		'2': 'Limit order',
+		'3': 'Stop order',
+		'4': 'Stop-limit order',
+		'K': 'Market-limit order',
+	},
 	54: {
 		'1': 'Buy',
 		'2': 'Sell',
@@ -653,10 +670,41 @@ TAG_ENUM_VALUES = {
 		'8': 'Cross (orders where counterparty is an exchange, valid for all messages except IOIs)',
 		'9': 'Cross short'
 	},
+	59: {
+		'0': 'DAY',
+		'1': 'GTC',
+		'3': 'FAK',
+		'6': 'GTD',
+	},
 	61: {
 		'0': 'Normal',
 		'1': 'Flash',
 		'2': 'Background'
+	},
+	102: {
+		'0': 'Too late to cancel',
+		'1': 'Unknown order',
+		'2': 'Broker/Exchange option',
+		'3': 'Order already pending cancel or cancel-replace',
+		'4': 'Unable to process mass cancel request',
+		'5': 'OrigOrdModTime (tag 586) did not match last TransactTime (tag 60) of order',
+		'6': 'Duplicate CLOrdID (tag 11) received',
+		'7': 'Price exceeds current price',
+		'8': 'Price exceeds current price band',
+		'18': 'Invalid price increment',
+		'99': 'Other',
+		'2045': 'This order is not in the book',
+		'1003': 'Orders may not be canceled while the market is closed',
+	},
+	150: {
+		'0': 'Order ack',
+		'1': 'Partial fill',
+		'2': 'Complete fill',
+		'4': 'Cancel ack',
+		'5': 'Modify ack',
+		'8': 'Reject',
+		'C': 'Expired',
+		'H': 'Trade canceled',
 	},
 	624: {
 		'1': 'Buy',
