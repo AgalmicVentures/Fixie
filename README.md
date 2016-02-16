@@ -8,5 +8,5 @@ from the command line.
 ### `GenerateTagMappings.py`
 Used to generate new content for `Fixie/Mappings.py` based on a CSV file.
 
-### `ViewFIX.py`
+### `ViewFix.py`
 Pretty prints a set of line-delimited FIX messages, e.g. from a log file.
