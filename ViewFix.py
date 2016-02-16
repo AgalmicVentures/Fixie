@@ -15,9 +15,10 @@ def printMessage(indent, messageStr):
 	Pretty prints a single (unparsed) FIX message.
 
 	:param indent: int
-	:param message: string
+	:param messageStr: string
 	"""
 	assert(type(indent) is int)
+	assert(type(messageStr) is str)
 
 	if messageStr == '':
 		return
