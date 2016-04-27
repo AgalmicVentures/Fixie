@@ -48,6 +48,10 @@ def printFile(file):
 	Pretty prints the contents of a file, line by line.
 	"""
 	for n, message in enumerate(file):
+		#Remove newlines
+		if len(message) > 0 and message[-1] == '\n':
+			message = message[:-1]
+
 		printMessage(n, message)
 
 def main():

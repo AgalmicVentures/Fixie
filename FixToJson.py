@@ -25,6 +25,10 @@ def printFile(file):
 	Prints the contents of a file, line by line.
 	"""
 	for message in file:
+		#Remove newlines
+		if len(message) > 0 and message[-1] == '\n':
+			message = message[:-1]
+
 		printMessage(message)
 
 def main():
