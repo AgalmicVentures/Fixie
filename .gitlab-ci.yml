@@ -1,0 +1,12 @@
+
+before_script:
+
+stages:
+  - test
+
+smoke_test_job:
+  stage: test
+  script:
+    - ./ViewFix.py data/secdef-test.dat > /dev/null
+  only:
+    - master
