@@ -16,7 +16,7 @@ def _tryParseDateTime(value, formats):
 		except ValueError:
 			pass #Nothing to do
 
-	return None
+	raise ValueError('Invalid datetime format for "%s"' % value)
 
 def parseBool(value):
 	"""

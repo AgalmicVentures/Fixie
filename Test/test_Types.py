@@ -22,3 +22,7 @@ class TypesTest(unittest.TestCase):
 		self.assertEqual(Types.parseMonthYear('201501'), datetime.date(2015, 1, 1))
 		self.assertEqual(Types.parseMonthYear('20150103'), datetime.date(2015, 1, 3))
 		self.assertEqual(Types.parseMonthYear('201503'), datetime.date(2015, 3, 1))
+
+		#Must specify a month
+		with self.assertRaises(ValueError):
+			Types.parseMonthYear('2015')
