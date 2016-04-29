@@ -49,7 +49,7 @@ def parseMonthYear(value):
 	:return: datetime.date
 	"""
 	#TODO: this doesn't handle week codes (w1, w2, w3, w4, w5)
-	d = self._tryParseDateTime(value, [
+	d = _tryParseDateTime(value, [
 		'%Y%m%d',
 		'%Y%m',
 	])
@@ -62,7 +62,7 @@ def parseUTCTimestamp(value):
 	:param value: str
 	:return: datetime.datetime
 	"""
-	return self._tryParseDateTime(value, [
+	return _tryParseDateTime(value, [
 		'%Y%m%d-%H:%M:%S.%f',
 		'%Y%m%d-%H:%M:%S',
 	])
@@ -74,7 +74,7 @@ def parseUTCDateOnly(value):
 	:param value: str
 	:return: datetime.date
 	"""
-	d = self._tryParseDateTime(value, [
+	d = _tryParseDateTime(value, [
 		'%Y%m%d',
 		'%Y%m',
 	])
@@ -87,7 +87,7 @@ def parseUTCTimeOnly(value):
 	:param value: str
 	:return: datetime.time
 	"""
-	d = self._tryParseDateTime(value, [
+	d = _tryParseDateTime(value, [
 		'%H:%M:%S.%f',
 		'%H:%M:%S',
 	])

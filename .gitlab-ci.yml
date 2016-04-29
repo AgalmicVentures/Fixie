@@ -4,6 +4,13 @@ before_script:
 stages:
   - test
 
+unit_test_job:
+  state: test
+  script:
+    - python3 -m unittest discover
+  only:
+    - master
+
 smoke_test_job:
   stage: test
   script:
