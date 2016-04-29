@@ -5,7 +5,7 @@ stages:
   - test
 
 unit_test_job:
-  state: test
+  stage: test
   script:
     - python3 -m unittest discover
   only:
