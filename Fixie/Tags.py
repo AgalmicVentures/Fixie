@@ -113,7 +113,7 @@ TAGS = [
 	FIXTag(   7, 'BeginSeqNo', typeName='int', repeatingHeaderId=None, vendor=None),
 	FIXTag(   8, 'BeginString', typeName='String', repeatingHeaderId=None, vendor=None, description='First in message'),
 	FIXTag(   9, 'BodyLength', typeName='int', repeatingHeaderId=None, vendor=None, description='How is this not a Length?'),
-	FIXTag(  10, 'CheckSum', typeName='String', repeatingHeaderId=None, vendor=None, description='Last in message'),
+	FIXTag(  10, 'CheckSum', typeName='int', repeatingHeaderId=None, vendor=None, description='Last in message'),
 	FIXTag(  11, 'ClOrdID', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag(  12, 'Commission', typeName='Amt', repeatingHeaderId=None, vendor=None),
 	FIXTag(  13, 'CommType', typeName='char', repeatingHeaderId=None, vendor=None, description='1=per share 2=percentage 3=absolute'),

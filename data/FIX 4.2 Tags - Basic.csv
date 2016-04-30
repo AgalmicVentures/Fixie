@@ -8,7 +8,7 @@ ID,Name,Type,Repeating Header ID,Vendor,Notes,Potential Issues
 7,BeginSeqNo,int,,,,
 8,BeginString,String,,,First in message,
 9,BodyLength,int,,,How is this not a Length?,
-10,CheckSum,String,,,Last in message,
+10,CheckSum,int,,,Last in message,
 11,ClOrdID,String,,,,
 12,Commission,Amt,,,,
 13,CommType,char,,,1=per share 2=percentage 3=absolute,

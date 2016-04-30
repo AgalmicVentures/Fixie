@@ -135,13 +135,9 @@ class FIXMessage:
 		checksum = calculateChecksum(partialMessage)
 		parts.append(Constants.SEPARATOR)
 
-		return '%s10=%3d%s' % (partialMessage, checksum, Constants.SEPARATOR)
+		self._message = '%s10=%3d%s' % (partialMessage, checksum, Constants.SEPARATOR)
 
 	########## Tag Helpers ##########
-
-	def _parsePrice(self, price):
-		#TODO: is this correct?
-		return float(price)
 
 	def averagePrice(self):
 		"""
