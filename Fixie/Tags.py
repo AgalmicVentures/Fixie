@@ -3,7 +3,7 @@ import re
 
 from . import Types
 
-class FIXTag:
+class FIXTag(object):
 	"""
 	Represents a FIX tag (used to automate parsing).
 	"""

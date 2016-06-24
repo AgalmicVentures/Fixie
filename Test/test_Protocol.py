@@ -1,5 +1,4 @@
 
-import datetime
 import unittest
 
 from Fixie import Protocol

@@ -95,7 +95,7 @@ def parseUTCTimeOnly(value):
 
 ########### Base Types ##########
 
-class FIXType:
+class FIXType(object):
 	"""
 	Generic interface for types in FIX.
 	"""

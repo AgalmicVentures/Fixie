@@ -11,7 +11,7 @@ def calculateChecksum(message):
 	checksum = sum(ord(ch) for ch in message)
 	return checksum % 256
 
-class FIXMessage:
+class FIXMessage(object):
 	"""
 	Represents a single FIX message, including helpful accessors.
 	"""
