@@ -13,10 +13,8 @@ def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constant
 	assert(len(separator) > 0)
 	assert(type(valueSeparator) is str)
 	assert(len(valueSeparator) > 0)
-	assert(len(message) > 0)
 
-	#TODO: better validation
-	if message[-1] != separator:
+	if len(message) == 0 or message[-1] != separator:
 		raise ValueError('FIX Message is invalid (length=%d): "%s"' % (
 			len(message), message.replace(separator, '|')))
 
