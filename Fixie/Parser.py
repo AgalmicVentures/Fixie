@@ -1,7 +1,6 @@
 
 from . import Constants
 
-#TODO: parse a single character at a time instead of using lots of a nasty splits
 def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constants.VALUE_SEPARATOR):
 	"""
 	Parses a single FIX message into a dictionary of ID's to lists of values.
@@ -22,20 +21,30 @@ def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constant
 			len(message), message.replace(separator, '|')))
 
 	parsedMessage = {}
-	for k, v in (d.split(valueSeparator, 2) for d in message.split(separator)[:-1]):
-		k = int(k)
-		currentValue = parsedMessage.get(k)
+
+	#TODO: correctly handle binary fields by using the prior length field
+	n = 0
+	while n < len(message):
+		nextValueSeparator = message.index(valueSeparator, n)
+		tagStr = message[n:nextValueSeparator]
+		tag = int(tagStr)
+
+		nextSeparator = message.index(separator, nextValueSeparator)
+		value = message[nextValueSeparator + 1:nextSeparator]
+
+		n = nextSeparator + 1
 
 		#Insert if there is nothing
+		currentValue = parsedMessage.get(tag)
 		if currentValue is None:
-			parsedMessage[k] = v
+			parsedMessage[tag] = value
 
 		#Or add on if it's a list
 		elif type(currentValue) is list:
-			currentValue.append(v)
+			currentValue.append(value)
 
 		#But if it's just a scalar, make a list
 		else:
-			parsedMessage[k] = [parsedMessage[k], v]
+			parsedMessage[tag] = [parsedMessage[tag], value]
 
 	return parsedMessage
