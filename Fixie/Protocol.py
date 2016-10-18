@@ -139,6 +139,14 @@ class FIXMessage(object):
 
 	########## Tag Helpers ##########
 
+	def account(self):
+		"""
+		Returns the account of the message as indicated by tag 1.
+
+		:return: str
+		"""
+		return self.get(1)
+
 	def averagePrice(self):
 		"""
 		Returns the average price of the message as indicated by tag 6.
@@ -171,6 +179,14 @@ class FIXMessage(object):
 		"""
 		return self.get(15)
 
+	def executionID(self):
+		"""
+		Returns the execution ID of the message as indicated by tag 17.
+
+		:return: str
+		"""
+		return self.get(17)
+
 	def lastPrice(self):
 		"""
 		Returns the last price of the message as indicated by tag 31.
@@ -195,6 +211,22 @@ class FIXMessage(object):
 		"""
 		return self.get(35)
 
+	def orderID(self):
+		"""
+		Returns the order ID of the message as indicated by tag 37.
+
+		:return: str
+		"""
+		return self.get(37)
+
+	def possibleDuplicateFlag(self):
+		"""
+		Returns the possible duplicate flag of the message as indicated by tag 43.
+
+		:return: bool
+		"""
+		return self.getParsed(43)
+
 	def price(self):
 		"""
 		Returns the price of the message as indicated by tag 44.
@@ -202,6 +234,14 @@ class FIXMessage(object):
 		:return: float
 		"""
 		return self.getParsed(44)
+
+	def securityID(self):
+		"""
+		Returns the security ID of the message as indicated by tag 48.
+
+		:return: str
+		"""
+		return self.get(48)
 
 	def senderCompID(self):
 		"""
@@ -211,6 +251,22 @@ class FIXMessage(object):
 		"""
 		return self.get(49)
 
+	def senderSubID(self):
+		"""
+		Returns the SenderSubID of the message as indicated by tag 50.
+
+		:return: str
+		"""
+		return self.get(50)
+
+	def side(self):
+		"""
+		Returns the side of the message as indicated by tag 54.
+
+		:return: str
+		"""
+		return self.get(54)
+
 	def symbol(self):
 		"""
 		Returns the symbol of the message as indicated by tag 55.
@@ -218,6 +274,54 @@ class FIXMessage(object):
 		:return: str
 		"""
 		return self.get(55)
+
+	def targetCompID(self):
+		"""
+		Returns the TargetCompID of the message as indicated by tag 56.
+
+		:return: str
+		"""
+		return self.get(56)
+
+	def targetSubID(self):
+		"""
+		Returns the TargetSubID of the message as indicated by tag 57.
+
+		:return: str
+		"""
+		return self.get(57)
+
+	def timeInForce(self):
+		"""
+		Returns the symbol of the message as indicated by tag 55.
+
+		:return: str
+		"""
+		return self.get(59)
+
+	def minimumQuantity(self):
+		"""
+		Returns the minimum quantity of the message as indicated by tag 110.
+
+		:return: int
+		"""
+		return self.get(110)
+
+	def leavesQuantity(self):
+		"""
+		Returns the leaves quantity of the message as indicated by tag 151.
+
+		:return: int
+		"""
+		return self.getParsed(151)
+
+	def securityType(self):
+		"""
+		Returns the security type of the message as indicated by tag 167.
+
+		:return: str
+		"""
+		return self.get(167)
 
 	def strikePrice(self):
 		"""
@@ -234,5 +338,13 @@ class FIXMessage(object):
 		:return: str
 		"""
 		return self.get(207)
+
+	def contractMultiplier(self):
+		"""
+		Returns the contract multiplier of the message as indicated by tag 231.
+
+		:return: float
+		"""
+		return self.get(231)
 
 	#TODO: others

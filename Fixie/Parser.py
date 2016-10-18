@@ -3,7 +3,7 @@ from . import Constants
 
 def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constants.VALUE_SEPARATOR):
 	"""
-	Parses a single FIX message into a dictionary of ID's to lists of values.
+	Parses a single FIX message into a dictionary of ID's to (lists of) values.
 
 	:param message: string
 	:return: dict of int -> list[string] (ID -> values)
@@ -23,25 +23,27 @@ def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constant
 	#TODO: correctly handle binary fields by using the prior length field
 	n = 0
 	while n < len(message):
+		#Parse the next tag
 		nextValueSeparator = message.index(valueSeparator, n)
 		tagStr = message[n:nextValueSeparator]
 		tag = int(tagStr)
 
+		#Parse the next value
 		nextSeparator = message.index(separator, nextValueSeparator)
 		value = message[nextValueSeparator + 1:nextSeparator]
-
 		n = nextSeparator + 1
 
-		#Insert if there is nothing
+		#Update the output
+		#  Insert if there is nothing
 		currentValue = parsedMessage.get(tag)
 		if currentValue is None:
 			parsedMessage[tag] = value
 
-		#Or add on if it's a list
+		#  Or add on if it's a list
 		elif type(currentValue) is list:
 			currentValue.append(value)
 
-		#But if it's just a scalar, make a list
+		#  But if it's just a scalar, make a list
 		else:
 			parsedMessage[tag] = [parsedMessage[tag], value]
 
