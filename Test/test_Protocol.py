@@ -19,17 +19,17 @@ class TypesTest(unittest.TestCase):
 		message.updateMessage()
 		#TODO: once repeating groups work self.assertEqual(message.message(), rawMessage)
 
-	def test_empty_message(self):
+	def test_emptyMessage(self):
 		rawMessage = ''
 		with self.assertRaises(ValueError):
 			Protocol.FIXMessage(rawMessage)
 
-	def test_missing_end_seperator_message(self):
+	def test_missingEndSeperatorMessage(self):
 		rawMessage = '1128=9\0019=667'
 		with self.assertRaises(ValueError):
 			Protocol.FIXMessage(rawMessage)
 
-	def test_invalid_tag_message(self):
+	def test_invalidTagMessage(self):
 		rawMessage = 'asdf=9\0019=667\001'
 		with self.assertRaises(ValueError):
 			Protocol.FIXMessage(rawMessage)
