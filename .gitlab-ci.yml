@@ -8,18 +8,29 @@ after_script:
   - deactivate
 
 stages:
-  - test
+  - unit_test
+  - functional_test
 
 unit_test_job:
-  stage: test
+  stage: unit_test
   script:
     - python3 -m unittest discover
   only:
     - master
 
 smoke_test_job:
-  stage: test
+  stage: functional_test
   script:
-    - ./ViewFix.py data/secdef-test.dat > /dev/null
+    - ./FixToJson.py -h
+    - ./GenerateTapMappings.py -h
+    - ./ViewFix.py -h
+  only:
+    - master
+
+functional_test_job:
+  stage: functional_test
+  script:
+    - ./FixToJson.py data/secdef-test.dat
+    - ./ViewFix.py data/secdef-test.dat
   only:
     - master
