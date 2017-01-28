@@ -22,7 +22,7 @@ smoke_test_job:
   stage: functional_test
   script:
     - ./FixToJson.py -h
-    - ./GenerateTapMappings.py -h
+    - ./GenerateTagMappings.py -h
     - ./ViewFix.py -h
   only:
     - master
