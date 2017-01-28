@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import io
+import argparse
 import json
 import sys
 
@@ -13,6 +13,8 @@ def printMessage(messageStr):
 	:param messageStr: string
 	"""
 	assert(type(messageStr) is str)
+
+	#Skip blank lines
 	if messageStr == '':
 		return
 
@@ -32,11 +34,16 @@ def printFile(file):
 		printMessage(message)
 
 def main():
+	parser = argparse.ArgumentParser(description='FIX to JSON Converter')
+	parser.add_argument('file', nargs='?', help='FIX file to convert.')
+
+	arguments = parser.parse_args(sys.argv[1:])
+
 	#Read from the file name passed as an argument, or stdin if none is passed
-	if len(sys.argv) <= 1:
+	if arguments.file is None:
 		printFile(sys.stdin)
 	else:
-		with io.open(sys.argv[1]) as fixFile:
+		with open(arguments.file) as fixFile:
 			printFile(fixFile)
 
 	return 0

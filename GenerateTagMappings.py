@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
+import argparse
 import csv
-import io
 import sys
 
 def main():
-	#Read from the file name passed as an argument
-	if len(sys.argv) <= 1:
-		print('Usage: generate_tag_mappings.py <TAGS.CSV>')
-		return 1
+	parser = argparse.ArgumentParser(description='Tag Mapping Code Generator')
+	parser.add_argument('file', help='Tag mapping CSV file.')
+
+	arguments = parser.parse_args(sys.argv[1:])
 
 	header = True
-	with io.open(sys.argv[1]) as tagsCsvFile:
+	with open(arguments.file) as tagsCsvFile:
 		for row in csv.reader(tagsCsvFile):
 			#Skip the header
 			if header:

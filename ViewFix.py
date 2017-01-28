@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 
-import io
+import argparse
 import sys
 
 import Fixie
 
 def getPrettyTagValue(tag, value):
+	"""
+	Pretty prints a tag value to a string by adding an explanation if it is an enum.
+
+	:param tag: int
+	:param value: str
+	:return: str
+	"""
 	enumValues = Fixie.TAG_ENUM_VALUES.get(tag)
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
@@ -20,6 +27,7 @@ def printMessage(indent, messageStr):
 	assert(type(indent) is int)
 	assert(type(messageStr) is str)
 
+	#Skip blank lines
 	if messageStr == '':
 		return
 
@@ -55,11 +63,16 @@ def printFile(file):
 		printMessage(n, message)
 
 def main():
+	parser = argparse.ArgumentParser(description='FIX Viewer')
+	parser.add_argument('file', nargs='?', help='FIX file to view.')
+
+	arguments = parser.parse_args(sys.argv[1:])
+
 	#Read from the file name passed as an argument, or stdin if none is passed
-	if len(sys.argv) <= 1:
+	if arguments.file is None:
 		printFile(sys.stdin)
 	else:
-		with io.open(sys.argv[1]) as fixFile:
+		with open(arguments.file) as fixFile:
 			printFile(fixFile)
 
 	return 0
