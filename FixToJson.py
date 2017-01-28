@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import gzip
 import json
 import sys
 
@@ -27,6 +28,10 @@ def printFile(file):
 	Prints the contents of a file, line by line.
 	"""
 	for message in file:
+		#Decode if necessary
+		if sys.version_info >= (3,):
+			message = message.decode('utf8')
+
 		#Remove newlines
 		if len(message) > 0 and message[-1] == '\n':
 			message = message[:-1]
@@ -43,7 +48,8 @@ def main():
 	if arguments.file is None:
 		printFile(sys.stdin)
 	else:
-		with open(arguments.file) as fixFile:
+		openF = gzip.open if arguments.file.endswith('.gz') else open
+		with openF(arguments.file, 'rb') as fixFile:
 			printFile(fixFile)
 
 	return 0

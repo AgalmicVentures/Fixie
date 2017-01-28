@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import gzip
 import sys
 
 import Fixie
@@ -49,13 +50,17 @@ def printMessage(indent, messageStr):
 
 		print('%28s [%4d] = %s%s' % (name, k, valueString, extra))
 
-	print()
+	print('')
 
 def printFile(file):
 	"""
 	Pretty prints the contents of a file, line by line.
 	"""
 	for n, message in enumerate(file):
+		#Decode if necessary
+		if sys.version_info >= (3,):
+			message = message.decode('utf8')
+
 		#Remove newlines
 		if len(message) > 0 and message[-1] == '\n':
 			message = message[:-1]
@@ -72,7 +77,8 @@ def main():
 	if arguments.file is None:
 		printFile(sys.stdin)
 	else:
-		with open(arguments.file) as fixFile:
+		openF = gzip.open if arguments.file.endswith('.gz') else open
+		with openF(arguments.file, 'rb') as fixFile:
 			printFile(fixFile)
 
 	return 0
