@@ -4,9 +4,6 @@ before_script:
   - source myenv/bin/activate
   - pip3 install -r requirements.txt
 
-after_script:
-  - deactivate
-
 stages:
   - unit_test
   - functional_test
