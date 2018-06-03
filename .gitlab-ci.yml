@@ -19,6 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+#Cache the virtual environment
+cache:
+  paths:
+    - env/
+
+#Ensure the virtual environment is installed
 before_script:
   - python3 -m venv env
   - source env/bin/activate
