@@ -39,10 +39,40 @@ class TypesTest(unittest.TestCase):
 			Types.parseBool('n')
 
 	def test_parseMonthYear(self):
+		#Common formats
 		self.assertEqual(Types.parseMonthYear('201501'), datetime.date(2015, 1, 1))
 		self.assertEqual(Types.parseMonthYear('20150103'), datetime.date(2015, 1, 3))
 		self.assertEqual(Types.parseMonthYear('201503'), datetime.date(2015, 3, 1))
 
+	def test_parseMonthYearWeekly(self):
+		#Weekly values: March has 5 weeks
+		self.assertEqual(Types.parseMonthYear('201503w0'), None)
+		self.assertEqual(Types.parseMonthYear('201503w1'), datetime.date(2015, 3, 1))
+		self.assertEqual(Types.parseMonthYear('201503w2'), datetime.date(2015, 3, 8))
+		self.assertEqual(Types.parseMonthYear('201503w3'), datetime.date(2015, 3, 15))
+		self.assertEqual(Types.parseMonthYear('201503w4'), datetime.date(2015, 3, 22))
+		self.assertEqual(Types.parseMonthYear('201503w5'), datetime.date(2015, 3, 29))
+		self.assertEqual(Types.parseMonthYear('201503w6'), None)
+
+		#Feb has 4 weeks
+		self.assertEqual(Types.parseMonthYear('201502w0'), None)
+		self.assertEqual(Types.parseMonthYear('201502w1'), datetime.date(2015, 2, 1))
+		self.assertEqual(Types.parseMonthYear('201502w2'), datetime.date(2015, 2, 8))
+		self.assertEqual(Types.parseMonthYear('201502w3'), datetime.date(2015, 2, 15))
+		self.assertEqual(Types.parseMonthYear('201502w4'), datetime.date(2015, 2, 22))
+		self.assertEqual(Types.parseMonthYear('201502w5'), None)
+		self.assertEqual(Types.parseMonthYear('201502w6'), None)
+
+		#Except in leap years
+		self.assertEqual(Types.parseMonthYear('201602w0'), None)
+		self.assertEqual(Types.parseMonthYear('201602w1'), datetime.date(2016, 2, 1))
+		self.assertEqual(Types.parseMonthYear('201602w2'), datetime.date(2016, 2, 8))
+		self.assertEqual(Types.parseMonthYear('201602w3'), datetime.date(2016, 2, 15))
+		self.assertEqual(Types.parseMonthYear('201602w4'), datetime.date(2016, 2, 22))
+		self.assertEqual(Types.parseMonthYear('201602w5'), datetime.date(2016, 2, 29))
+		self.assertEqual(Types.parseMonthYear('201602w6'), None)
+
+	def test_parseMonthYearError(self):
 		#Must specify a month
 		with self.assertRaises(ValueError):
 			Types.parseMonthYear('2015')

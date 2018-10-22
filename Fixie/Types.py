@@ -68,7 +68,16 @@ def parseMonthYear(value):
 	:param value: str
 	:return: datetime.date
 	"""
-	#TODO: this doesn't handle week codes (w1, w2, w3, w4, w5)
+	#Handle values of the form YYYYMMw[1-5]
+	if len(value) == 8 and value[-2] == 'w':
+		try:
+			d = datetime.datetime.strptime(value[:6], '%Y%m').date()
+			w = int(value[-1])
+			return d.replace(day=7 * (w - 1) + 1)
+		except ValueError:
+			return None
+
+	#Most often, this path will be taken
 	d = _tryParseDateTime(value, [
 		'%Y%m%d',
 		'%Y%m',
