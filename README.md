@@ -28,7 +28,13 @@ explanation after their value, and the length of the raw FIX message is limited.
                       SecurityID [  48] = 24922
     ...
 
-Commonly used with `less`: `./ViewFix.py data/secdef-test.dat | less`.
+Commonly used with `less`:
+
+    > ./ViewFix.py data/secdef-test.dat | less
+
+Or, with color:
+
+    > ./ViewFix.py -c data/secdef-test.dat | less -R
 
 ## Development
 

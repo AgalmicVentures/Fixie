@@ -26,6 +26,13 @@ import sys
 
 import Fixie
 
+NO_COLOR = '\033[00m'
+RED = '\033[1;31m'
+GREEN = '\033[0;32m'
+YELLOW = '\033[1;33m'
+BLUE = '\033[0;34m'
+CYAN = '\033[0;36m'
+
 def getPrettyTagValue(tag, value):
 	"""
 	Pretty prints a tag value to a string by adding an explanation if it is an enum.
@@ -38,7 +45,7 @@ def getPrettyTagValue(tag, value):
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
 
-def printMessage(indent, messageStr):
+def printMessage(indent, messageStr, colorize=False):
 	"""
 	Pretty prints a single (unparsed) FIX message.
 
@@ -52,29 +59,46 @@ def printMessage(indent, messageStr):
 	if messageStr == '':
 		return
 
-	print('%6d: %s%s' % (indent, messageStr[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(messageStr) > 100 else ''))
+	#Print the message
+	color = CYAN
+	print('%s%6d: %s%s' % (color if colorize else '', indent,
+		messageStr[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(messageStr) > 100 else ''),
+		NO_COLOR if colorize else '')
+
+	checksumTag = Fixie.TAG_NAME_TO_TAG['CheckSum']
 
 	#TODO: error handling
 	message = Fixie.FIXMessage(messageStr)
 	parsedMessage = message.parsedMessage()
 	for k in sorted(parsedMessage.keys()):
+		color = NO_COLOR if colorize else ''
+
 		tag = Fixie.TAG_ID_TO_TAG.get(k)
 		name = tag.name() if tag is not None else ''
 
 		value = parsedMessage[k]
 		valueString = ', '.join(getPrettyTagValue(k, item) for item in value) if type(value) is list else getPrettyTagValue(k, value)
 
+		#Extra handling for certain tags
 		extra = ''
-		if tag is not None and tag.id() == 10:
-			extra = ' (calculated checksum = %d)' % message.calculateChecksum()
+		if tag is not None:
+			if tag.id() == checksumTag.id():
+				parsedChecksum = checksumTag.type().parse(value)
+				calculatedChecksum = message.calculateChecksum()
+				extra = ' (calculated checksum = %d)' % calculatedChecksum
+				color = GREEN if parsedChecksum == calculatedChecksum else RED
 
-		print('%28s [%4d] = %s%s' % (name, k, valueString, extra))
+		print('%s%28s [%4d] = %s%s%s' % (color if colorize else '',
+			name, k, valueString, extra, NO_COLOR if colorize else ''))
 
 	print('')
 
-def printFile(file):
+def printFile(file, colorize=False):
 	"""
 	Pretty prints the contents of a file, line by line.
+
+	:param file: file object to print
+	:param colorize: bool Flag indicating whether to colorize the output.
 	"""
 	for n, message in enumerate(file):
 		#Decode if necessary
@@ -85,21 +109,23 @@ def printFile(file):
 		if len(message) > 0 and message[-1] == '\n':
 			message = message[:-1]
 
-		printMessage(n, message)
+		printMessage(n, message, colorize=colorize)
 
 def main():
 	parser = argparse.ArgumentParser(description='FIX Viewer')
+	parser.add_argument('-c', '--colorize', action='store_true',
+		help='Colorize the output.')
 	parser.add_argument('file', nargs='?', help='FIX file to view.')
 
 	arguments = parser.parse_args(sys.argv[1:])
 
 	#Read from the file name passed as an argument, or stdin if none is passed
 	if arguments.file is None:
-		printFile(sys.stdin)
+		printFile(sys.stdin, colorize=arguments.colorize)
 	else:
 		openF = gzip.open if arguments.file.endswith('.gz') else open
 		with openF(arguments.file, 'rb') as fixFile:
-			printFile(fixFile)
+			printFile(fixFile, colorize=arguments.colorize)
 
 	return 0
 
