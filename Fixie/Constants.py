@@ -19,6 +19,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+#These are in a separate file to avoid circular dependencies among the other files.
+
 SEPARATOR = '\x01'
 VALUE_SEPARATOR = '='
 
