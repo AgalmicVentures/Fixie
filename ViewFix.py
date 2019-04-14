@@ -65,6 +65,7 @@ def printMessage(indent, messageStr, colorize=False):
 		messageStr[:100].replace(Fixie.SEPARATOR, '|'), '...' if len(messageStr) > 100 else ''),
 		NO_COLOR if colorize else '')
 
+	bodyLengthTag = Fixie.TAG_NAME_TO_TAG['BodyLength']
 	checksumTag = Fixie.TAG_NAME_TO_TAG['CheckSum']
 
 	#TODO: error handling
@@ -94,7 +95,14 @@ def printMessage(indent, messageStr, colorize=False):
 
 		#Extra handling for certain tags
 		if tag is not None:
-			if tag.id() == checksumTag.id():
+			if tag.id() == bodyLengthTag.id():
+				bodyLengthStr = '%s%d=%s' % (Fixie.SEPARATOR, bodyLengthTag.id(), value)
+				bodyLengthIndex = messageStr.index(bodyLengthStr)
+				checksumIndex = messageStr.index('%s%d=' % (Fixie.SEPARATOR, checksumTag.id()))
+				calculatedLength = checksumIndex - bodyLengthIndex - len(bodyLengthStr)
+				extra = 'Calculated length = %d' % calculatedLength
+				color = GREEN if parsedValue == calculatedLength else RED
+			elif tag.id() == checksumTag.id():
 				calculatedChecksum = message.calculateChecksum()
 				extra = 'Calculated checksum = %d' % calculatedChecksum
 				color = GREEN if parsedValue == calculatedChecksum else RED
