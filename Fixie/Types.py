@@ -99,8 +99,11 @@ def parseUTCTimestamp(value):
 	:return: datetime.datetime
 	"""
 	return _tryParseDateTime(value, [
-		'%Y%m%d-%H:%M:%S.%f',
 		'%Y%m%d-%H:%M:%S',
+		'%Y%m%d-%H:%M:%S.%f',
+
+		'%Y%m%d%H%M%S',
+		'%Y%m%d%H%M%S%f',
 	])
 
 def parseUTCDateOnly(value):
@@ -124,8 +127,11 @@ def parseUTCTimeOnly(value):
 	:return: datetime.time
 	"""
 	d = _tryParseDateTime(value, [
-		'%H:%M:%S.%f',
 		'%H:%M:%S',
+		'%H:%M:%S.%f',
+
+		'%H%M%S',
+		'%H%M%S%f',
 	])
 	return d.time() if d is not None else None
 
@@ -416,8 +422,8 @@ class FIXExchange(FIXString):
 		return 'Exchange'
 
 	def parse(self, value):
-		if len(value) != 3:
-			raise ValueError('FIX currency values must be 3 characters: %s', value)
+		if len(value) != 4:
+			raise ValueError('FIX exchange values must be 4 characters: %s', value)
 
 		return value
 
