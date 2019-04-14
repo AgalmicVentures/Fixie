@@ -36,7 +36,7 @@ class FIXTag(object):
 		assert(0 < id)
 		assert(id < 10000)
 		assert(type(name) is str)
-		assert(re.match('[A-Z0-9][a-zA-Z0-9]*', name) is not None)
+		assert(re.match('^[A-Z0-9][a-zA-Z0-9]*$', name) is not None)
 		assert(typeName is None or type(typeName) is str)
 		assert(repeatingHeaderId is None or type(repeatingHeaderId) is int)
 		assert(vendor is None or type(vendor) is str)
@@ -400,7 +400,7 @@ TAGS = [
 	FIXTag( 315, 'UnderlyingPutOrCall', typeName='int', repeatingHeaderId=None, vendor=None),
 	FIXTag( 316, 'UnderlyingStrikePrice', typeName='Price', repeatingHeaderId=None, vendor=None),
 	FIXTag( 317, 'UnderlyingOptAttribute', typeName='char', repeatingHeaderId=None, vendor=None),
-	FIXTag( 318, 'Underlying Currency', typeName='Currency', repeatingHeaderId=None, vendor=None),
+	FIXTag( 318, 'UnderlyingCurrency', typeName='Currency', repeatingHeaderId=None, vendor=None),
 	FIXTag( 319, 'RatioQty', typeName='Qty', repeatingHeaderId=None, vendor=None),
 	FIXTag( 320, 'SecurityReqID', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 321, 'SecurityRequestType', typeName='int', repeatingHeaderId=None, vendor=None),

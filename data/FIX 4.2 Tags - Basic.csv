@@ -275,7 +275,7 @@ ID,Name,Type,Repeating Header ID,Vendor,Notes,Potential Issues
 315,UnderlyingPutOrCall,int,,,,
 316,UnderlyingStrikePrice,Price,,,,
 317,UnderlyingOptAttribute,char,,,,
-318,Underlying Currency,Currency,,,,
+318,UnderlyingCurrency,Currency,,,,
 319,RatioQty,Qty,,,,
 320,SecurityReqID,String,,,,
 321,SecurityRequestType,int,,,,
