@@ -25,7 +25,9 @@ def parseMessage(message, separator=Constants.SEPARATOR, valueSeparator=Constant
 	"""
 	Parses a single FIX message into a dictionary of ID's to (lists of) values.
 
-	:param message: string
+	:param message: str
+	:param separator: str Separator, by default '\x01'
+	:param valueSeparator: str Key/value separator, by default '='
 	:return: dict of int -> list[string] (ID -> values)
 	"""
 	assert(type(message) is str)

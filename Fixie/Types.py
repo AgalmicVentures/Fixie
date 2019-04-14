@@ -30,6 +30,13 @@ import datetime
 #Not everything should require an object
 
 def _tryParseDateTime(value, formats):
+	"""
+	Attempts to parse a datetime using a variety of formats.
+
+	:param value: str
+	:param formats: list of str
+	:return: datetime.datetime
+	"""
 	for format in formats:
 		try:
 			return datetime.datetime.strptime(value, format)
