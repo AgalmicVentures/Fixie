@@ -45,7 +45,7 @@ def getPrettyTagValue(tag, value):
 	enumValue = ' [%s]' % enumValues.get(value, 'ERROR: Unknown enum value') if enumValues is not None else ''
 	return '%s%s' % (value, enumValue)
 
-def printMessage(indent, messageStr, colorize=False):
+def printMessage(indent, messageStr, colorize=None):
 	"""
 	Pretty prints a single (unparsed) FIX message.
 
@@ -58,6 +58,10 @@ def printMessage(indent, messageStr, colorize=False):
 	#Skip blank lines
 	if messageStr == '':
 		return
+
+	#Colorize by default on TTY's, not otherwise
+	if colorize is None:
+		colorize = sys.stdout.isatty()
 
 	#Print the message
 	color = CYAN
@@ -132,8 +136,8 @@ def printFile(file, colorize=False):
 
 def main():
 	parser = argparse.ArgumentParser(description='FIX Viewer')
-	parser.add_argument('-c', '--colorize', action='store_true',
-		help='Colorize the output.')
+	parser.add_argument('-c', '--colorize', action='store_true', default=None,
+		help='Colorize the output (default True in a TTY, false otherwise).')
 	parser.add_argument('file', nargs='?', help='FIX file to view.')
 
 	arguments = parser.parse_args(sys.argv[1:])
