@@ -24,6 +24,13 @@ import argparse
 import gzip
 import sys
 
+import inspect
+import os
+_currentFile = os.path.abspath(inspect.getfile(inspect.currentframe()))
+_currentDir = os.path.dirname(_currentFile)
+_parentDir = os.path.dirname(os.path.dirname(_currentDir))
+sys.path.insert(0, _parentDir)
+
 import Fixie
 
 NO_COLOR = '\033[00m'
