@@ -44,16 +44,16 @@ unit_test_job:
 smoke_test_job:
   stage: functional_test
   script:
-    - ./FixToJson.py -h
-    - ./GenerateTagMappings.py -h
-    - ./ViewFix.py -h
+    - Fixie/Tools/FixToJson.py -h
+    - Fixie/Tools/GenerateTagMappings.py -h
+    - Fixie/Tools/ViewFix.py -h
   only:
     - master
 
 functional_test_job:
   stage: functional_test
   script:
-    - ./FixToJson.py data/secdef-test.dat
-    - ./ViewFix.py data/secdef-test.dat
+    - Fixie/Tools/FixToJson.py data/secdef-test.dat
+    - Fixie/Tools/ViewFix.py data/secdef-test.dat
   only:
     - master
