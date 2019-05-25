@@ -34,7 +34,7 @@ class FIXTag(object):
 		"""
 		assert(type(id) is int)
 		assert(0 < id)
-		assert(id < 10000)
+		assert(id < 100000)
 		assert(type(name) is str)
 		assert(re.match('^[A-Z0-9][a-zA-Z0-9]*$', name) is not None)
 		assert(typeName is None or type(typeName) is str)
@@ -532,8 +532,9 @@ TAGS = [
 	FIXTag( 454, 'NoSecurityAltID', typeName='NumInGroup', repeatingHeaderId=None, vendor='CME', description='This tag is under development.'),
 	FIXTag( 455, 'SecurityAltID', typeName='String', repeatingHeaderId=454, vendor='CME', description='This tag is under development.'),
 	FIXTag( 456, 'SecurityAltIDSource', typeName='String', repeatingHeaderId=454, vendor='CME', description='This tag is under development.'),
-	FIXTag( 461, 'CFICode', typeName='String', repeatingHeaderId=None, vendor='CME', description='Indicates the type of security using ISO 10962 standard, Classification of Financial Instruments (CFI code) values. See: http://www.cmegroup.com/confluence/display/EPICSANDBOX/Market+Data+-+CFICode+Table+of+Values'),
+	FIXTag( 461, 'CFICode', typeName='String', repeatingHeaderId=None, vendor=None, description='Indicates the type of security using ISO 10962 standard, Classification of Financial Instruments (CFI code) values. See: http://www.cmegroup.com/confluence/display/EPICSANDBOX/Market+Data+-+CFICode+Table+of+Values'),
 	FIXTag( 462, 'UnderlyingProduct', typeName='int', repeatingHeaderId=None, vendor='CME', description='Product complex (2=Commodity/Agriculture, 4=Currency, 5=Equity, 12=Other, 14=Interest Rate, 15=FX Cash, 16=Energy, 17=Metals)'),
+	FIXTag( 541, 'MaturityDate', typeName='LocalMktDate', repeatingHeaderId=None, vendor=None),
 	FIXTag( 555, 'NoLegs', typeName='NumInGroup', repeatingHeaderId=None, vendor='CME', description='Number of legs.'),
 	FIXTag( 556, 'LegCurrency', typeName='Currency', repeatingHeaderId=555, vendor='CME', description='Currency for this leg.'),
 	FIXTag( 562, 'MinTradeVol', typeName='Qty', repeatingHeaderId=None, vendor='CME', description='The minimum trading volume for a security.'),
@@ -553,7 +554,7 @@ TAGS = [
 	FIXTag( 762, 'SecuritySubType', typeName='String', repeatingHeaderId=None, vendor='CME', description='Indicates Strategy type.'),
 	FIXTag( 764, 'LegSecuritySubType', typeName='String', repeatingHeaderId=555, vendor='CME', description='If leg repeating group is a spread, the strategy type for the spread.'),
 	FIXTag( 779, 'LastUpdateTime', typeName='UTCTimestamp', repeatingHeaderId=None, vendor='CME', description='Timestamp of when the instrument was deleted.'),
-	FIXTag( 827, 'ExpirationCycle', typeName='int', repeatingHeaderId=None, vendor='CME', description="Indicates if the instrument expires at the trading session close, or at a specified last eligible trade date. If '0', the instrument is eligible for Day orders only. If '2', the instrument is eligible for GTC/GTD orders (outrights only). "),
+	FIXTag( 827, 'ExpirationCycle', typeName='int', repeatingHeaderId=None, vendor='CME', description="Indicates if the instrument expires at the trading session close, or at a specified last eligible trade date. If '0', the instrument is eligible for Day orders only. If '2', the instrument is eligible for GTC/GTD orders (outrights only)."),
 	FIXTag( 864, 'NoEvents', typeName='NumInGroup', repeatingHeaderId=None, vendor='CME', description='Number of repeating EventType entries.'),
 	FIXTag( 865, 'EventType', typeName='int', repeatingHeaderId=864, vendor='CME', description='Code to represent the type of event (5=Activation, 7=Last eligible trade date)'),
 	FIXTag( 866, 'EventDate', typeName='LocalMktDate', repeatingHeaderId=864, vendor='CME', description='Date of event.'),
@@ -604,7 +605,12 @@ TAGS = [
 	FIXTag(9787, 'DisplayFactor', typeName='float', repeatingHeaderId=None, vendor='CME', description='Contains the multiplier to convert the CME Globex display price to the conventional price.'),
 	FIXTag(9850, 'MinCabPrice', typeName='Price', repeatingHeaderId=None, vendor='CME', description='Defines cabinet price for outright options products.'),
 	FIXTag(9853, 'PricingModel', typeName='char', repeatingHeaderId=None, vendor='CME', description='Identifies options pricing model (F=Fischer-Black, W=Whaley).'),
-
+	FIXTag(16460, 'DeliveryUnit', typeName='Int', repeatingHeaderId=None, vendor='TT', description='Delivery unit for this contract (e.g. 2500 MBtus, 50 megawatts, etc.)'),
+	FIXTag(16463, 'Blocks', typeName='int', repeatingHeaderId=None, vendor='TT', description='Total number of deliverable units per contract'),
+	FIXTag(16464, 'TradesInFlow', typeName='Boolean', repeatingHeaderId=None, vendor='TT', description='Whether the contract is continuously delivered.'),
+	FIXTag(16552, 'ExchTickSize', typeName='float', repeatingHeaderId=None, vendor='TT', description='Size of one base tick for this security'),
+	FIXTag(16554, 'ExchPointValue', typeName='float', repeatingHeaderId=None, vendor='TT', description='Size of one point for this  security'),
+	FIXTag(18211, 'ContractTerm', typeName='char', repeatingHeaderId=None, vendor='TT', description='The term of the contract (Y=yearly, Q=quarterly, etc.)'),
 ##### END GENERATED CODE
 ]
 
@@ -731,6 +737,10 @@ TAG_ENUM_VALUES = {
 		'C': 'Expired',
 		'H': 'Trade canceled',
 	},
+	201: {
+		'0': 'Put',
+		'1': 'Call',
+	},
 	624: {
 		'1': 'Buy',
 		'2': 'Sell'
@@ -787,5 +797,19 @@ TAG_ENUM_VALUES = {
 	9853: {
 		'F': 'Fisher-Black',
 		'W': 'Whaley'
-	}
+	},
+	18211: {
+		'A': 'Same day',
+		'B': 'Balance of month',
+		'D': 'Daily',
+		'L': 'Balance of week',
+		'N': 'Next day',
+		'M': 'Monthly',
+		'Q': 'Quarterly',
+		'S': 'Seasonal',
+		'V': 'Variable',
+		'W': 'Weekly',
+		'X': 'Custom',
+		'Y': 'Yearly',
+	},
 }
