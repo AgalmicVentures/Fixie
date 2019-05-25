@@ -422,8 +422,8 @@ class FIXExchange(FIXString):
 		return 'Exchange'
 
 	def parse(self, value):
-		if len(value) != 4:
-			raise ValueError('FIX exchange values must be 4 characters: %s', value)
+		if len(value) > 4:
+			raise ValueError('FIX exchange values must be <= 4 characters: %s', value)
 
 		return value
 
