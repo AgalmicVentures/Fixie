@@ -86,26 +86,29 @@ def printMessage(indent, messageStr, colorize=None):
 		extra = ''
 		color = NO_COLOR if colorize else ''
 
-		tag = Fixie.TAG_ID_TO_TAG.get(k)
-		name = tag.name() if tag is not None else ''
-
 		value = parsedMessage[k]
 		valueString = ', '.join(getPrettyTagValue(k, item) for item in value) if type(value) is list else getPrettyTagValue(k, value)
 
-		#Does the value parse correctly?
-		try:
-			if type(value) is list:
-				parsedValue = [tag.type().parse(item) for item in value]
-			else:
-				parsedValue = tag.type().parse(value)
-		except Exception as e:
-			parsedValue = None
-
-			extra = str(e)
+		tag = Fixie.TAG_ID_TO_TAG.get(k)
+		if tag is None:
+			name = ''
 			color = YELLOW
+		else:
+			name = tag.name()
 
-		#Extra handling for certain tags
-		if tag is not None:
+			#Does the value parse correctly?
+			try:
+				if type(value) is list:
+					parsedValue = [tag.type().parse(item) for item in value]
+				else:
+					parsedValue = tag.type().parse(value)
+			except Exception as e:
+				parsedValue = None
+
+				extra = str(e)
+				color = YELLOW
+
+			#Extra handling for certain tags
 			if tag.id() == bodyLengthTag.id():
 				bodyLengthStr = '%s%d=%s' % (Fixie.SEPARATOR, bodyLengthTag.id(), value)
 				bodyLengthIndex = messageStr.index(bodyLengthStr)
