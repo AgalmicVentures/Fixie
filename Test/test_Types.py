@@ -44,7 +44,7 @@ class TypesTest(unittest.TestCase):
 		self.assertEqual(Types.parseMonthYear('20150103'), datetime.date(2015, 1, 3))
 		self.assertEqual(Types.parseMonthYear('201503'), datetime.date(2015, 3, 1))
 
-	def test_parseMonthYearWeekly(self):
+	def test_parseMonthYear_weekly(self):
 		#Weekly values: March has 5 weeks
 		self.assertEqual(Types.parseMonthYear('201503w0'), None)
 		self.assertEqual(Types.parseMonthYear('201503w1'), datetime.date(2015, 3, 1))
@@ -72,7 +72,7 @@ class TypesTest(unittest.TestCase):
 		self.assertEqual(Types.parseMonthYear('201602w5'), datetime.date(2016, 2, 29))
 		self.assertEqual(Types.parseMonthYear('201602w6'), None)
 
-	def test_parseMonthYearError(self):
+	def test_parseMonthYear_error(self):
 		#Must specify a month
 		with self.assertRaises(ValueError):
 			Types.parseMonthYear('2015')
