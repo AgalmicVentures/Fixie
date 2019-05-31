@@ -253,7 +253,7 @@ class FIXBoolean(FIXChar):
 	"""
 
 	def name(self):
-		return 'bool'
+		return 'Boolean'
 
 	def type(self):
 		return bool
