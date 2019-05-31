@@ -36,7 +36,7 @@ class FIXTag(object):
 		assert(0 < id)
 		assert(id < 100000)
 		assert(type(name) is str)
-		assert(re.match('^[A-Z0-9][a-zA-Z0-9]*$', name) is not None)
+		assert(re.match('^[A-Z0-9][a-zA-Z0-9_]*$', name) is not None)
 		assert(typeName is None or type(typeName) is str)
 		assert(repeatingHeaderId is None or type(repeatingHeaderId) is int)
 		assert(vendor is None or type(vendor) is str)
@@ -529,9 +529,10 @@ TAGS = [
 	FIXTag( 444, 'ListStatusText', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 445, 'EncodedListStatusTextLen', typeName='Length', repeatingHeaderId=None, vendor=None),
 	FIXTag( 446, 'EncodedListStatusText', typeName='data', repeatingHeaderId=None, vendor=None),
-	FIXTag( 454, 'NoSecurityAltID', typeName='NumInGroup', repeatingHeaderId=None, vendor='CME', description='This tag is under development.'),
-	FIXTag( 455, 'SecurityAltID', typeName='String', repeatingHeaderId=454, vendor='CME', description='This tag is under development.'),
-	FIXTag( 456, 'SecurityAltIDSource', typeName='String', repeatingHeaderId=454, vendor='CME', description='This tag is under development.'),
+	FIXTag( 454, 'NoSecurityAltID', typeName='NumInGroup', repeatingHeaderId=None, vendor=None),
+	FIXTag( 455, 'SecurityAltID', typeName='String', repeatingHeaderId=454, vendor=None),
+	FIXTag( 456, 'SecurityAltIDSource', typeName='String', repeatingHeaderId=454, vendor=None),
+	FIXTag( 460, 'Product', typeName='int', repeatingHeaderId=None, vendor=None),
 	FIXTag( 461, 'CFICode', typeName='String', repeatingHeaderId=None, vendor=None, description='Indicates the type of security using ISO 10962 standard, Classification of Financial Instruments (CFI code) values. See: http://www.cmegroup.com/confluence/display/EPICSANDBOX/Market+Data+-+CFICode+Table+of+Values'),
 	FIXTag( 462, 'UnderlyingProduct', typeName='int', repeatingHeaderId=None, vendor='CME', description='Product complex (2=Commodity/Agriculture, 4=Currency, 5=Equity, 12=Other, 14=Interest Rate, 15=FX Cash, 16=Energy, 17=Metals)'),
 	FIXTag( 541, 'MaturityDate', typeName='LocalMktDate', repeatingHeaderId=None, vendor=None),
@@ -542,8 +543,13 @@ TAGS = [
 	FIXTag( 600, 'LegSymbol', typeName='String', repeatingHeaderId=555, vendor='CME', description='Only sent for options strategies and futures spreads. '),
 	FIXTag( 602, 'LegSecurityID', typeName='String', repeatingHeaderId=555, vendor='CME', description='Unique instrument ID for the leg.'),
 	FIXTag( 603, 'LegSecurityIDSource', typeName='String', repeatingHeaderId=555, vendor='CME', description="Identifies source of tag 602-LegSecurityID value. This value is always '8' for CME."),
+	FIXTag( 604, 'NoLegSecurityAltID', typeName='NumInGroup', repeatingHeaderId=None, vendor=None),
+	FIXTag( 605, 'LegSecurityAltID', typeName='String', repeatingHeaderId=None, vendor=None),
+	FIXTag( 606, 'LegSecurityAltIDSource', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 608, 'LegCFICode', typeName='String', repeatingHeaderId=555, vendor='CME', description='CFI code for this leg.'),
+	FIXTag( 609, 'LegSecurityType', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 610, 'LegMaturityMonthYear', typeName='MonthYear', repeatingHeaderId=555, vendor='CME', description="Leg's MaturityMonthYear."),
+	FIXTag( 611, 'LegMaturityDate', typeName='LocalMktDate', repeatingHeaderId=None, vendor=None),
 	FIXTag( 612, 'LegStrikePrice', typeName='Price', repeatingHeaderId=555, vendor='CME', description='Strike price of the leg.'),
 	FIXTag( 616, 'LegSecurityExchange', typeName='Exchange', repeatingHeaderId=555, vendor='CME', description='Security exchange of the leg.'),
 	FIXTag( 620, 'LegSecurityDesc', typeName='String', repeatingHeaderId=555, vendor='CME', description='Leg security description (e.g., ESM0 C1130)'),
@@ -605,12 +611,19 @@ TAGS = [
 	FIXTag(9787, 'DisplayFactor', typeName='float', repeatingHeaderId=None, vendor='CME', description='Contains the multiplier to convert the CME Globex display price to the conventional price.'),
 	FIXTag(9850, 'MinCabPrice', typeName='Price', repeatingHeaderId=None, vendor='CME', description='Defines cabinet price for outright options products.'),
 	FIXTag(9853, 'PricingModel', typeName='char', repeatingHeaderId=None, vendor='CME', description='Identifies options pricing model (F=Fischer-Black, W=Whaley).'),
+	FIXTag(10456, 'UnderlyingSecurityAltID', typeName='String', repeatingHeaderId=None, vendor='TT', description='Leg’s alternative security ID'),
 	FIXTag(16460, 'DeliveryUnit', typeName='Int', repeatingHeaderId=None, vendor='TT', description='Delivery unit for this contract (e.g. 2500 MBtus, 50 megawatts, etc.)'),
 	FIXTag(16463, 'Blocks', typeName='int', repeatingHeaderId=None, vendor='TT', description='Total number of deliverable units per contract'),
 	FIXTag(16464, 'TradesInFlow', typeName='Boolean', repeatingHeaderId=None, vendor='TT', description='Whether the contract is continuously delivered.'),
+	FIXTag(16456, 'NumTickTblEntries', typeName='NumInGroup', repeatingHeaderId=None, vendor='TT', description='Number of ticks in the tick table.'),
 	FIXTag(16552, 'ExchTickSize', typeName='float', repeatingHeaderId=None, vendor='TT', description='Size of one base tick for this security'),
 	FIXTag(16554, 'ExchPointValue', typeName='float', repeatingHeaderId=None, vendor='TT', description='Size of one point for this  security'),
+	FIXTag(16624, 'LegSide_TT', typeName='char', repeatingHeaderId=None, vendor='TT', description='Side of the leg (1=Buy, 2=Sell)'),
+	FIXTag(18100, 'LegExDestination', typeName='Exchange', repeatingHeaderId=None, vendor='TT', description='Exchange the leg trades on'),
 	FIXTag(18211, 'ContractTerm', typeName='char', repeatingHeaderId=None, vendor='TT', description='The term of the contract (Y=yearly, Q=quarterly, etc.)'),
+	FIXTag(18212, 'LegDeliveryTerm', typeName='char', repeatingHeaderId=None, vendor='TT', description='Delivery term of the leg'),
+	FIXTag(18224, 'LegContractYearMonth', typeName='MonthYear', repeatingHeaderId=None, vendor='TT', description='Month and year in which the leg matures'),
+	FIXTag(18314, 'LegMaturityDay', typeName='DayOfMonth', repeatingHeaderId=None, vendor='TT', description='Day of the month on which the leg matures'),
 ##### END GENERATED CODE
 ]
 
@@ -620,8 +633,52 @@ for tag in TAGS:
 	assert(tag.id() not in TAG_ID_TO_TAG)
 	TAG_ID_TO_TAG[tag.id()] = tag
 
-	assert(tag.name() not in TAG_NAME_TO_TAG)
+	if tag.name() in TAG_NAME_TO_TAG:
+		raise RuntimeError('Duplicate tag name %s' % tag.name())
 	TAG_NAME_TO_TAG[tag.name()] = tag
+
+SECURITY_ID_SOURCES = {
+	'1': 'CUSIP',
+	'2': 'SEDOL',
+	'3': 'QUIK',
+	'4': 'ISIN',
+	'5': 'RIC',
+	'6': 'ISO 4217',
+	'7': 'ISO 3166-1',
+	'8': 'Exchange Symbol',
+	'9': 'CTA',
+	'A': 'Bloomberg',
+	'B': 'Wertpapier',
+	'C': 'Dutch',
+	'D': 'Valoren',
+	'E': 'Sicovam',
+	'F': 'Belgian',
+	'G': 'Clearstream',
+	'H': 'Clearing',
+	'I': 'ISDA',
+	'J': 'OPRA',
+	'94': 'Alt Symbol',
+	'95': 'Clearport',
+	'96': 'TT',
+	'97': 'TT Alias',
+	'98': 'Name',
+	'99': 'Other',
+}
+
+DELIVERY_TERM = {
+	'A': 'Same day',
+	'B': 'Balance of month',
+	'D': 'Daily',
+	'L': 'Balance of week',
+	'N': 'Next day',
+	'M': 'Monthly',
+	'Q': 'Quarterly',
+	'S': 'Seasonal',
+	'V': 'Variable',
+	'W': 'Weekly',
+	'X': 'Custom',
+	'Y': 'Yearly',
+}
 
 #Separate from the tags for ease of code generation
 TAG_ENUM_VALUES = {
@@ -741,6 +798,24 @@ TAG_ENUM_VALUES = {
 		'0': 'Put',
 		'1': 'Call',
 	},
+	456: SECURITY_ID_SOURCES,
+	460: {
+		'1': 'Agency',
+		'2': 'Commodity',
+		'3': 'Corporate',
+		'4': 'Currency',
+		'5': 'Equity',
+		'6': 'Government',
+		'7': 'Index',
+		'8': 'Loan',
+		'9': 'Money Market',
+		'10': 'Mortgage',
+		'11': 'Municipal',
+		'12': 'Other',
+		'13': 'Financing',
+	},
+	603: SECURITY_ID_SOURCES,
+	606: SECURITY_ID_SOURCES,
 	624: {
 		'1': 'Buy',
 		'2': 'Sell'
@@ -798,18 +873,6 @@ TAG_ENUM_VALUES = {
 		'F': 'Fisher-Black',
 		'W': 'Whaley'
 	},
-	18211: {
-		'A': 'Same day',
-		'B': 'Balance of month',
-		'D': 'Daily',
-		'L': 'Balance of week',
-		'N': 'Next day',
-		'M': 'Monthly',
-		'Q': 'Quarterly',
-		'S': 'Seasonal',
-		'V': 'Variable',
-		'W': 'Weekly',
-		'X': 'Custom',
-		'Y': 'Yearly',
-	},
+	18211: DELIVERY_TERM,
+	18212: DELIVERY_TERM,
 }
