@@ -87,7 +87,11 @@ def printMessage(indent, messageStr, colorize=None):
 		color = NO_COLOR if colorize else ''
 
 		value = parsedMessage[k]
-		valueString = ', '.join(getPrettyTagValue(k, item) for item in value) if type(value) is list else getPrettyTagValue(k, value)
+		if type(value) is list:
+			separator = ', ' if len(value) < 6 else ',\n' + ' ' * 39
+			valueString = separator.join(getPrettyTagValue(k, item) for item in value)
+		else:
+			valueString = getPrettyTagValue(k, value)
 
 		tag = Fixie.TAG_ID_TO_TAG.get(k)
 		if tag is None:
@@ -121,7 +125,7 @@ def printMessage(indent, messageStr, colorize=None):
 				extra = 'Calculated checksum = %d' % calculatedChecksum
 				color = GREEN if parsedValue == calculatedChecksum else RED
 
-		print('%s%28s [%4d] = %s%s%s' % (color if colorize else '',
+		print('%s%28s [%5d] = %s%s%s' % (color if colorize else '',
 			name, k, valueString, ' (%s)' % extra if extra != '' else '', NO_COLOR if colorize else ''))
 
 	print('')
