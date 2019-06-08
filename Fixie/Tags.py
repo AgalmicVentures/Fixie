@@ -104,7 +104,7 @@ class FIXTag(object):
 		"""
 		Returns the ID of the repeating group header if this is a part of one.
 
-		:return: str
+		:return: int
 		"""
 		return self._repeatingHeaderId
 

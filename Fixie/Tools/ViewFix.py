@@ -112,6 +112,24 @@ def printMessage(indent, messageStr, colorize=None):
 				extra = str(e)
 				color = YELLOW
 
+			#Is it part of a repeating group?
+			if tag.repeatingHeaderId() is not None:
+				headerValue = parsedMessage.get(tag.repeatingHeaderId())
+				if headerValue is None:
+					extra = 'No group header found [tag %d]' % tag.repeatingHeaderId()
+					color = RED
+				elif parsedValue is not None:
+					try:
+						#Header counts should be parseable, and match the count of items
+						parsedHeaderValue = int(headerValue)
+						valueLength = len(parsedValue) if type(parsedValue) is list else 1
+						if parsedHeaderValue != valueLength:
+							extra = 'Group header [tag %d] disagrees with item count [%d vs %d]' % (
+								tag.repeatingHeaderId(), parsedHeaderValue, valueLength)
+							color = YELLOW
+					except ValueError:
+						color = YELLOW
+
 			#Extra handling for certain tags
 			if tag.id() == bodyLengthTag.id():
 				bodyLengthStr = '%s%d=%s' % (Fixie.SEPARATOR, bodyLengthTag.id(), value)
