@@ -46,6 +46,8 @@ class FIXTag(object):
 		self._name = name
 		self._typeName = typeName
 		self._type = None if typeName is None else Types.TYPE_NAME_TO_TYPE.get(typeName)
+		assert(typeName is None or self._type is not None)
+
 		self._repeatingHeaderId = repeatingHeaderId
 		self._vendor = vendor
 		self._description = description
@@ -459,7 +461,7 @@ TAGS = [
 	FIXTag( 374, 'BidRequestTransType', typeName='char', repeatingHeaderId=None, vendor=None),
 	FIXTag( 375, 'ContraBroker', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 376, 'ComplianceID', typeName='String', repeatingHeaderId=None, vendor=None),
-	FIXTag( 377, 'SolicitedFlag', typeName='boolean', repeatingHeaderId=None, vendor=None),
+	FIXTag( 377, 'SolicitedFlag', typeName='Boolean', repeatingHeaderId=None, vendor=None),
 	FIXTag( 378, 'ExecRestatementReason', typeName='int', repeatingHeaderId=None, vendor=None),
 	FIXTag( 379, 'BusinessRejectRefID', typeName='String', repeatingHeaderId=None, vendor=None),
 	FIXTag( 380, 'BusinessRejectReason', typeName='int', repeatingHeaderId=None, vendor=None),
@@ -612,7 +614,7 @@ TAGS = [
 	FIXTag(9850, 'MinCabPrice', typeName='Price', repeatingHeaderId=None, vendor='CME', description='Defines cabinet price for outright options products.'),
 	FIXTag(9853, 'PricingModel', typeName='char', repeatingHeaderId=None, vendor='CME', description='Identifies options pricing model (F=Fischer-Black, W=Whaley).'),
 	FIXTag(10456, 'UnderlyingSecurityAltID', typeName='String', repeatingHeaderId=None, vendor='TT', description='Leg’s alternative security ID'),
-	FIXTag(16460, 'DeliveryUnit', typeName='Int', repeatingHeaderId=None, vendor='TT', description='Delivery unit for this contract (e.g. 2500 MBtus, 50 megawatts, etc.)'),
+	FIXTag(16460, 'DeliveryUnit', typeName='int', repeatingHeaderId=None, vendor='TT', description='Delivery unit for this contract (e.g. 2500 MBtus, 50 megawatts, etc.)'),
 	FIXTag(16463, 'Blocks', typeName='int', repeatingHeaderId=None, vendor='TT', description='Total number of deliverable units per contract'),
 	FIXTag(16464, 'TradesInFlow', typeName='Boolean', repeatingHeaderId=None, vendor='TT', description='Whether the contract is continuously delivered.'),
 	FIXTag(16456, 'NumTickTblEntries', typeName='NumInGroup', repeatingHeaderId=None, vendor='TT', description='Number of ticks in the tick table.'),
