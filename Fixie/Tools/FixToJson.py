@@ -22,7 +22,10 @@
 
 import argparse
 import gzip
-import json
+try:
+	import ujson as json
+except ImportError:
+	import json
 import sys
 
 import inspect
