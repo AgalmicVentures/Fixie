@@ -179,8 +179,11 @@ def main():
 		printFile(sys.stdin, colorize=arguments.colorize)
 	else:
 		openF = gzip.open if arguments.file.endswith('.gz') else open
-		with openF(arguments.file, 'rb') as fixFile:
-			printFile(fixFile, colorize=arguments.colorize)
+		try:
+			with openF(arguments.file, 'rb') as fixFile:
+				printFile(fixFile, colorize=arguments.colorize)
+		except BrokenPipeError:
+			pass #These happen when you pipe to less and quit
 
 	return 0
 
