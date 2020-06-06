@@ -573,7 +573,7 @@ TAGS = [
 	FIXTag( 942, 'LegStrikeCurrency', typeName='Currency', repeatingHeaderId=555, vendor='CME', description='Currency of the strike price of the leg.'),
 	FIXTag( 947, 'StrikeCurrency', typeName='Currency', repeatingHeaderId=None, vendor='CME', description='Currency in which the strike price is denominated.'),
 	FIXTag( 969, 'MinPriceIncrement', typeName='float', repeatingHeaderId=None, vendor='CME', description='Minimum constant tick for the instrument, sent only if instrument is non-VTT (Variable Tick table) eligible.'),
-	FIXTag( 980, 'SecurityUpdateAction', typeName='char', repeatingHeaderId=None, vendor='CME', description='M=Modify, D=Delete.'),
+	FIXTag( 980, 'SecurityUpdateAction', typeName='char', repeatingHeaderId=None, vendor='CME', description='A=Add, M=Modify, D=Delete.'),
 	FIXTag( 996, 'UnitOfMeasure', typeName='String', repeatingHeaderId=None, vendor='CME', description="Unit of measure for the products' original contract size."),
 	FIXTag(1017, 'LegOptionDelta', typeName='float', repeatingHeaderId=555, vendor='CME', description='Delta used to calculate the quantity of futures used to cover the option or option strategy.'),
 	FIXTag(1022, 'MDFeedType', typeName='String', repeatingHeaderId=1141, vendor='CME', description='Describes a class of service for a given data feed.'),
@@ -837,6 +837,7 @@ TAG_ENUM_VALUES = {
 		'7': 'Last eligible trade date'
 	},
 	980: {
+		'A': 'Add',
 		'D': 'Delete',
 		'M': 'Modify'
 	},

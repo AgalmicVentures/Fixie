@@ -446,7 +446,7 @@ ID,Name,Type,Repeating Header ID,Vendor,Notes,Potential Issues
 942,LegStrikeCurrency,Currency,555,CME,Currency of the strike price of the leg.,
 947,StrikeCurrency,Currency,,CME,Currency in which the strike price is denominated.,
 969,MinPriceIncrement,float,,CME,"Minimum constant tick for the instrument, sent only if instrument is non-VTT (Variable Tick table) eligible.",
-980,SecurityUpdateAction,char,,CME,"M=Modify, D=Delete.",
+980,SecurityUpdateAction,char,,CME,"A=Add, M=Modify, D=Delete.",
 996,UnitOfMeasure,String,,CME,Unit of measure for the products' original contract size.,
 1017,LegOptionDelta,float,555,CME,Delta used to calculate the quantity of futures used to cover the option or option strategy.,
 1022,MDFeedType,String,1141,CME,Describes a class of service for a given data feed.,
