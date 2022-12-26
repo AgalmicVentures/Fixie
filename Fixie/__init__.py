@@ -24,3 +24,5 @@ from .Parser import *
 from .Protocol import *
 from .Tags import *
 from .Types import *
+
+from . import Tools
