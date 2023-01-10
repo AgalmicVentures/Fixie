@@ -140,22 +140,22 @@ class FIXMessage(object):
 				parts.append('%s=%s%s' % (headerID, value, Constants.SEPARATOR))
 
 		#Write other fields
+		ignoreIDs = [10]
 		for tagID in self._parsedMessage:
-			#Skip headers
+			#Skip headers and footers
 			if tagID in headerIDs:
+				continue
+			elif tagID in ignoreIDs:
 				continue
 
 			parts.append('%s=%s%s' % (tagID, self._parsedMessage[tagID], Constants.SEPARATOR))
 
 		#Calculate the partial message for the checksum
-		parts.append(Constants.SEPARATOR)
 		partialMessage = ''.join(parts)
 
 		#Add the checksum
 		checksum = calculateChecksum(partialMessage)
-		parts.append(Constants.SEPARATOR)
-
-		self._message = '%s10=%3d%s' % (partialMessage, checksum, Constants.SEPARATOR)
+		self._message = '%s10=%03d%s' % (partialMessage, checksum, Constants.SEPARATOR)
 
 	########## Tag Helpers ##########
 
