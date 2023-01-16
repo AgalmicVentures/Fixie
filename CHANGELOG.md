@@ -18,4 +18,5 @@
 	- FIX deserialization
 	- FIX serialization for messages without repeating groups
 
-[0.0.2]: https://github.com/AgalmicVentures/HumanTime/releases/tag/0.0.2
+[0.0.3]: https://github.com/AgalmicVentures/Fixie/compare/0.0.2...0.0.3
+[0.0.2]: https://github.com/AgalmicVentures/Fixie/releases/tag/0.0.2
