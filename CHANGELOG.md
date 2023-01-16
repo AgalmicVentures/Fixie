@@ -2,7 +2,8 @@
 
 ## 0.0.3
 ### Added
-- Blank messages may now be created for message generation.
+- Blank messages may be created for message generation.
+- Messages support dictionary magic methods such as __setitem__.
 ### Changed
 - Fix message generation issues:
 	- Fix doubled separator.

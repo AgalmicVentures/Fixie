@@ -107,6 +107,23 @@ class FIXMessage(object):
 		"""
 		return len(self._message)
 
+	def __contains__(self, item):
+		"""
+		Returns True if the item is present in the parsed message.
+
+		:return: bool
+		"""
+		return item in self._parsedMessage
+
+	def __getitem__(self, key):
+		return self._parsedMessage[key]
+
+	def __setitem__(self, key, value):
+		self._parsedMessage[key] = value
+
+	def __delitem__(self, key):
+		del self._parsedMessage[key]
+
 	########## Methods ##########
 
 	def calculateChecksum(self):

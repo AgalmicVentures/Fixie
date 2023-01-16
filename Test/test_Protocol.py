@@ -54,16 +54,35 @@ class ProtocolTest(unittest.TestCase):
 		with self.assertRaises(ValueError):
 			Protocol.FIXMessage(rawMessage)
 
+	def test_initializeMessage(self):
+		message = Protocol.FIXMessage()
+
+		#Ensure __contains__, __getitem__, and __setitem__ work
+		self.assertFalse(8 in message)
+		message[8] = 'FIX.4.4'
+		self.assertTrue(8 in message)
+		self.assertEqual(message[8], 'FIX.4.4')
+
+		#Ensure lengths are automatically generated
+		self.assertFalse(9 in message)
+		message.updateMessage()
+		self.assertEqual(message[9], 0)
+		self.assertTrue(9 in message)
+
+		#Ensure __delitem__ works
+		del message[9]
+		self.assertFalse(9 in message)
+
 	def test_generateMessage(self):
 		message = Protocol.FIXMessage()
-		message.parsedMessage()[35] = '0'
+		message[35] = '0'
 
 		message.updateMessage()
 		stringMessage = str(message)
 
 		message2 = Protocol.FIXMessage(stringMessage)
-		self.assertEqual(message2.parsedMessage().get(9), '5')
-		self.assertEqual(message2.parsedMessage().get(35), '0')
+		self.assertEqual(message2.get(9), '5')
+		self.assertEqual(message2.get(35), '0')
 
 		self.assertEqual(message2.bodyLength(), 5)
 		self.assertEqual(message2.messageType(), '0')
