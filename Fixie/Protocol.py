@@ -36,14 +36,18 @@ class FIXMessage(object):
 	Represents a single FIX message, including helpful accessors.
 	"""
 
-	def __init__(self, message):
+	def __init__(self, message=None):
 		"""
-		Initializes a new instance of FIXMessage with an unparsed message.
+		Initialized an empty instance of FIXMessage.
 		"""
-		assert(type(message) is str)
+		if message is None:
+			self._message = ''
+			self._parsedMessage = {}
+		else:
+			assert(type(message) is str)
 
-		self._message = message
-		self._parsedMessage = Parser.parseMessage(message)
+			self._message = message
+			self._parsedMessage = Parser.parseMessage(message)
 
 	########## Basic Accessors ##########
 
@@ -132,25 +136,28 @@ class FIXMessage(object):
 		#Parts of the message to be joined
 		parts = []
 
-		#Create the headers
-		headerIDs = [8, 9, 35, 49, 56, 34, 52]
-		for headerID in headerIDs:
-			value = self.get(headerID)
-			if value is not None:
-				parts.append('%s=%s%s' % (headerID, value, Constants.SEPARATOR))
-
-		#Write other fields
-		ignoreIDs = [10]
+		#Write inner fields
+		#headerIDs = [35, 49, 56, 34, 52]
+		headerIDs = [8, 9]
+		ignoreIDs = headerIDs + [10]
 		for tagID in self._parsedMessage:
 			#Skip headers and footers
-			if tagID in headerIDs:
-				continue
-			elif tagID in ignoreIDs:
+			if tagID in ignoreIDs:
 				continue
 
 			parts.append('%s=%s%s' % (tagID, self._parsedMessage[tagID], Constants.SEPARATOR))
 
-		#Calculate the partial message for the checksum
+		#Calculate the partial message for the length
+		partialMessage = ''.join(parts)
+		self._parsedMessage[9] = len(partialMessage)
+
+		#Create the headers
+		parts = []
+		for headerID in headerIDs:
+			value = self.get(headerID)
+			if value is not None:
+				parts.append('%s=%s%s' % (headerID, value, Constants.SEPARATOR))
+		parts.append(partialMessage)
 		partialMessage = ''.join(parts)
 
 		#Add the checksum

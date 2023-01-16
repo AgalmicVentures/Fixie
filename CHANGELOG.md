@@ -1,10 +1,13 @@
 # Change Log
 
 ## 0.0.3
+### Added
+- Blank messages may now be created for message generation.
 ### Changed
 - Fix message generation issues:
 	- Fix doubled separator.
-	- Do not include old field 10.
+	- Calculate and populate length correctly.
+	- Calculate and populate checksum correctly.
 	- Pad checksum with zeroes rather than spaces.
 
 ## [0.0.2] - 2022-12-26
